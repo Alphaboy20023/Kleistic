@@ -1,4 +1,4 @@
-import { BrowserRouter as Routes, Route } from 'react-router-dom';
+import { Routes, Route } from 'react-router-dom';
 import LandingPage from "./pages/LandingPage";
 import ProductDetail from './pages/productDetail';
 import SignUp from './pages/SignUp';
