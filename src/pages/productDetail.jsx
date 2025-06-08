@@ -12,7 +12,7 @@ const ProductDetail = () => {
     const { id } = useParams();
     const product = defaultProducts.find(p => p.id.toString() === id);
     const [selectedSize, setSelectedSize] = useState(null);
-    const [count, setCount] = useState(0);
+    // const [count, setCount] = useState(0);
     const sizes = ['XS', 'S', 'M', 'L', 'XL']
 
     if (!product) return <div className="p-6">Product not found</div>
@@ -20,13 +20,13 @@ const ProductDetail = () => {
 
 
 
-    const handleDecrease = () => {
-        setCount(count -= 1)
-    }
+    // const handleDecrease = () => {
+    //     setCount(count -= 1)
+    // }
 
-    const handleIncrease = () => {
-        setCount(count += 1)
-    }
+    // const handleIncrease = () => {
+    //     setCount(count += 1)
+    // }
 
     return (
         <>
@@ -97,7 +97,7 @@ const ProductDetail = () => {
 
 
                         <div className="flex gap-4">
-                            <div className="flex items-center  ">
+                            {/* <div className="flex items-center  ">
                                 <button onClick={() => handleDecrease(count)} className="px-2 h-8 border-gray-200 border rounded">-</button>
                                 <input
                                     type="number"
@@ -108,7 +108,7 @@ const ProductDetail = () => {
                                     className="w-14 h-8 border border-gray-200 rounded text-center flex focus:outline-none "
                                 />
                                 <button onClick={() => handleIncrease(count)} className="px-2 h-8 border rounded">+</button>
-                            </div>
+                            </div> */}
                             <div className="flex space-x-4">
                                 <Link to="/checkout" className="flex px-4 pb-1 pt-1 text-center text-white rounded border bg-orange-600">Buy Now</Link>
                                 <Link to="/countwishlist" className="border border-gray-300 flex justify-center p-1">

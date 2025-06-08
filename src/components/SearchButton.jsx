@@ -9,8 +9,8 @@ const SearchBtn = () => {
     const handleSearchClick = async () => {
         if (query.trim()) {
             setIsSearching(true);
-            console.log("searching for", query)
-
+            console.log("searching for", query, isSearching)
+            
             // api
 
         }
