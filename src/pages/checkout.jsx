@@ -6,6 +6,12 @@ import Footer from "../components/Footer";
 
 const Checkout = () => {
 
+
+    // const subtotal = cartItems.reduce((acc, item) => acc + item.price * item.quantity, 0.00)
+    // const shipping = subtotal > 200 ? 25 : 0;
+
+    // const total = subtotal + shipping
+
     return (
         <>
 
@@ -52,21 +58,28 @@ const Checkout = () => {
                     </div>
                     <div className=" flex justify-between border-b border-gray-300 p-2">
                         <p>Shipping: </p>
-                        <p>$ShippingPrice</p>
+                        <p>$</p>
                     </div>
                     <div className=" flex justify-between border-b border-gray-300 p-2">
                         <p>Total: </p>
                         <p>$TotalPrice</p>
                     </div>
 
-                    <div className="flex space-x-5">
-                        <input type="radio" />
-                        <label htmlFor="radio"> Bank</label>
-                        <img src="" alt="payment_card_options" />
-                    </div>
-                    <div className="flex space-x-5">
-                        <input type="radio" />
-                        <label htmlFor="radio"> Cash on delivery</label>
+                    <div className="flex flex-col space-y-4">
+                        <div className="flex items-center space-x-4">
+                            <input type="radio" id="bank" name="paymentMethod" value="bank" />
+                            <label htmlFor="bank">Bank</label>
+                            <img
+                                src="/img/payments.png"
+                                alt="payment_card_options"
+                                className="h-6 w-auto"
+                            />
+                        </div>
+
+                        <div className="flex items-center space-x-4">
+                            <input type="radio" id="cod" name="paymentMethod" value="cash_on_delivery" />
+                            <label htmlFor="cod">Cash on Delivery</label>
+                        </div>
                     </div>
 
                     <div className="flex flex-col gap-4">
@@ -83,7 +96,7 @@ const Checkout = () => {
 
                 </section>
             </div>
-            <Footer/>
+            <Footer />
         </>
     )
 }

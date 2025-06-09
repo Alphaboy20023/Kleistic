@@ -1,4 +1,3 @@
-// import { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import { LuEye } from 'react-icons/lu';
 import defaultProducts from "../data/product";
@@ -81,6 +80,8 @@ const ThisMonth = () => {
                                 </div>
                             </div>
                         </div>
+
+
                     ))}
                 </div>
             </div>

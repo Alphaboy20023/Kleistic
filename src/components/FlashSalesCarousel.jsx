@@ -46,7 +46,7 @@ const FlashSalesCarousel = forwardRef(({ products, nextEl, prevEl }, ref) => {
             >
                 {items.map((product) => (
                     <SwiperSlide key={product.id}>
-                        <div className="bg-purple-100 py-11 px-8 h-[270px] relative">
+                        <div className="bg-purple-100 py-11 px-8 h-[280px] relative">
                             <div className="absolute top-3 left-4 bg-red-700 text-white text-[14px] text-center rounded-[4px] w-[50px] h-[24px]">
                                 {product.discount}
                             </div>

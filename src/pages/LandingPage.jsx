@@ -33,14 +33,16 @@ const LandingPage = () => {
 
       {/* Hero Section */}
       <main className="pt-[220px] lg:pt-[125px]">
-      
+
         <div className="py-7 flex flex-col sm:flex-row gap-8 sm:pl-4 sm:py-4 lg:mt-5 max-w-[1400px] mx-auto">
           <aside className="ml-8 flex flex-col border-r-0 sm:border-r-2 px-6">
             {[
-              "Women's Fashion", "Men's Fashion", "Electronics", "Home and Lifestyle",
-              "Medicine", "Sports and Outdoor", "Baby's & Toys", "Groceries and pets", "Health and beauty"
+              "Women's Fashion", "Men's Fashion", "Electronics", "Gaming",
+              "Baby's and Toys", "Groceries and pets", "Health and beauty", "Lifestyle"
             ].map((category, idx) => (
-              <p key={idx}>{category}</p>
+              <Link key={idx} to={`/category/${encodeURIComponent(category)}`}>
+                <p className="cursor-pointer hover:text-orange-500">{category}</p>
+              </Link>
             ))}
           </aside>
           <HeroCarousel />

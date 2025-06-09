@@ -8,6 +8,7 @@ import Cart from './pages/cart';
 import Checkout from './pages/checkout';
 import About from './pages/about';
 import Contact from './pages/contact';
+import CategoryPage from './pages/categoryPage';
 
 
 const NavBarLinks = () => {
@@ -22,6 +23,7 @@ const NavBarLinks = () => {
             <Route path="/checkout" element={<Checkout />} />
             <Route path="/about" element={<About />} />
             <Route path="/contact" element={<Contact />} />
+            <Route path="/category/:mainCategory" element={<CategoryPage />} />
         </Routes>
     )
 }
