@@ -74,7 +74,7 @@ const Checkout = () => {
                             <input type="text" placeholder="coupon code"
                                 className="focus:outline-none border border-gray-700 px-2"
                             />
-                            <button className="bg-orange-600 text-center  text-[13px] lg:text-lg p-3 text-white ">Apply Coupon</button>
+                            <button className="bg-orange-600 text-center    text-[13px] lg:text-xl lg:text-lg px-3 text-white ">Apply Coupon</button>
                         </div>
 
 

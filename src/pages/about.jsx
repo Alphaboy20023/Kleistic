@@ -3,6 +3,9 @@ import Footer from "../components/Footer";
 import { FaTruckFast } from "react-icons/fa6";
 import { RiCustomerServiceFill } from "react-icons/ri";
 import { MdOutlineVerifiedUser } from "react-icons/md";
+import { GiFamilyHouse } from "react-icons/gi";
+import { BiDollarCircle } from "react-icons/bi";
+
 
 const About = () => {
     return (
@@ -24,13 +27,17 @@ const About = () => {
             </div>
 
             <div className="flex justify-center gap-5 pb-6">
-                <div className="border flex border-gray-200 flex shadow-lg justify-center items-center flex-col p-5">
-                    <img src="" alt="" />
+                <div className="border flex border-gray-200 flex shadow-lg justify-center items-center flex-col p-5 space-y-1">
+                    <div className="rounded-full bg-gray-300 p-4">
+                        <GiFamilyHouse className="text-4xl" />
+                    </div>
                     <p className="font-bold text-2xl">10.5k</p>
                     <p className="font-semibold">sellers active on our site</p>
                 </div>
-                <div className="border flex border-gray-200 shadow-lg flex justify-center items-center flex-col p-5">
-                    logo
+                <div className="border flex border-gray-200 shadow-lg flex justify-center items-center flex-col p-5 space-y-1">
+                    <div className="rounded-full bg-gray-300 p-4">
+                        <BiDollarCircle className="text-4xl" />
+                    </div>
                     <p className="font-bold text-2xl">25.5k</p>
                     <p className="font-semibold">Monthly product Sale</p>
                 </div>

@@ -12,14 +12,20 @@ import defaultProducts from "../data/product";
 import { FaTruckFast } from "react-icons/fa6";
 import { RiCustomerServiceFill } from "react-icons/ri";
 import { MdOutlineVerifiedUser } from "react-icons/md";
+// import SearchBtn from "../components/SearchButton";
 
 
 
 const LandingPage = () => {
   const nextRef = useRef(null);
   const prevRef = useRef(null);
+  // const { searchTerm } = useSearch();
+
+  // const filteredProducts = defaultProducts.filter((product) =>
+  //   product.title.toLowerCase().includes(searchTerm.toLowerCase()) );
 
   const flashSales = defaultProducts.filter(p => p.category === "flashSales");
+
 
   return (
     <>
@@ -27,6 +33,7 @@ const LandingPage = () => {
 
       {/* Hero Section */}
       <main className="pt-[220px] lg:pt-[125px]">
+      
         <div className="py-7 flex flex-col sm:flex-row gap-8 sm:pl-4 sm:py-4 lg:mt-5 max-w-[1400px] mx-auto">
           <aside className="ml-8 flex flex-col border-r-0 sm:border-r-2 px-6">
             {[
