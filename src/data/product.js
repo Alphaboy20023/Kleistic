@@ -9,7 +9,7 @@ const defaultProducts = [
     rating: 5,
     reviews: 65,
     category: "ThisMonth",
-    mainCategory:""
+    mainCategory:"Men's Fashion"
   },
   {
     id: 2,
@@ -143,6 +143,7 @@ const defaultProducts = [
     rating: 5,
     reviews: 35,
     category: "OurProducts",
+    mainCategory:"Sports"
   },
   {
     id: 13,
@@ -218,14 +219,15 @@ const defaultProducts = [
   },
   {
     id: 19,
-    title: "ASUS FHD Gaming Laptop",
-    price: 380,
+    title: "H10 Gaming Handheld controller",
+    price: 350,
     oldPrice: 410,
     discount: "-26%",
-    image: "/img/gamingLaptop.jpg",
+    image: "/img/H10.jpg",
     rating: 4.5,
     reviews: 95,
     category: "flashSales",
+    mainCategory:"Gaming"
   },
 ];
 

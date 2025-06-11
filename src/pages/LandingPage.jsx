@@ -38,7 +38,7 @@ const LandingPage = () => {
           <aside className="ml-8 flex flex-col border-r-0 sm:border-r-2 px-6">
             {[
               "Women's Fashion", "Men's Fashion", "Electronics", "Gaming",
-              "Baby's and Toys", "Groceries and pets", "Health and beauty", "Lifestyle"
+              "Baby's and Toys", "Groceries and pets", "Health and beauty", "Lifestyle", "Sports"
             ].map((category, idx) => (
               <Link key={idx} to={`/category/${encodeURIComponent(category)}`}>
                 <p className="cursor-pointer hover:text-orange-500">{category}</p>
@@ -74,7 +74,7 @@ const LandingPage = () => {
             <FlashSalesCarousel nextEl={nextRef} prevEl={prevRef} products={flashSales} />
 
             <div className="flex justify-center p-4">
-              <Link to="/product_detail?section=flashSales" className="bg-orange-600 px-4 py-2 text-white">
+              <Link to="/all_products/flashSales" className="bg-orange-600 px-4 py-2 text-white">
                 View all Products
               </Link>
             </div>
@@ -88,7 +88,7 @@ const LandingPage = () => {
             </div>
             <div className="flex items-center flex-wrap justify-between">
               <p className="font-bold text-3xl m-1">Best Selling Products</p>
-              <Link to="/product_detail?section=ThisMonth" className="bg-orange-700 px-6 py-2 text-white m-1">
+              <Link to="/all_products/ThisMonth" className="bg-orange-700 px-6 py-2 text-white m-1">
                 View all
               </Link>
             </div>
@@ -124,7 +124,7 @@ const LandingPage = () => {
             <p className="font-bold text-3xl py-2 m-1">Explore Our Products</p>
             <OurProducts />
             <div className="flex justify-center p-8">
-              <Link to="/product_detail?section=OurProducts" className="bg-orange-700 px-4 py-2 text-white">
+              <Link to="/all_products/OurProducts" className="bg-orange-700 px-4 py-2 text-white">
                 View all Products
               </Link>
             </div>

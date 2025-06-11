@@ -124,7 +124,7 @@ const Checkout = () => {
                         </div>
 
                         <Link
-                            to="/order-confirmation"
+                            to="#order-confirmation"
                             className="p-4 w-40 text-center text-white text-xl bg-green-600 border rounded"
                         >
                             Place Order

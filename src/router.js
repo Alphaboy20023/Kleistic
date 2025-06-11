@@ -9,13 +9,13 @@ import Checkout from './pages/checkout';
 import About from './pages/about';
 import Contact from './pages/contact';
 import CategoryPage from './pages/categoryPage';
+import AllProducts from './pages/allProduct';
 
 
 const NavBarLinks = () => {
     return (
         <Routes>
             <Route path="/" element={<LandingPage />} />
-            <Route path="/product_detail/:id" element={<ProductDetail />} />
             <Route path="/register" element={<SignUp />} />
             <Route path="/login" element={<Login />} />
             <Route path="/wishlist" element={<Wishlist />} />
@@ -23,6 +23,8 @@ const NavBarLinks = () => {
             <Route path="/checkout" element={<Checkout />} />
             <Route path="/about" element={<About />} />
             <Route path="/contact" element={<Contact />} />
+            <Route path="/all_products/:categoryId" element={<AllProducts />} />
+            <Route path="/product_detail/:id" element={<ProductDetail />} />
             <Route path="/category/:mainCategory" element={<CategoryPage />} />
         </Routes>
     )
