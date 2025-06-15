@@ -8,7 +8,7 @@ const defaultProducts = [
     image: "/img/northcoat.jpg",
     rating: 5,
     reviews: 65,
-    category: "ThisMonth",
+    category: "This Month",
     mainCategory:"Men's Fashion"
   },
   {
@@ -19,7 +19,7 @@ const defaultProducts = [
     image: "/img/gucci_dufflebag.jpg",
     rating: 4.7,
     reviews: 65,
-    category: "ThisMonth",
+    category: "This Month",
     mainCategory:"Women's Fashion"
   },
   {
@@ -30,7 +30,7 @@ const defaultProducts = [
     image: "/img/JBL_720.jpg",
     rating: 4.7,
     reviews: 65,
-    category: "ThisMonth",
+    category: "This Month",
     mainCategory:"Electronics",
     description:" JBL Pure Bass Sound: The JBL Tune 720BT features the renowned JBL Pure Bass sound, the same technology that powers the most famous venues all around the world. "
   },
@@ -42,7 +42,7 @@ const defaultProducts = [
     image: "/img/cerave.webp",
     rating: 4.7,
     reviews: 65,
-    category: "ThisMonth",
+    category: "This Month",
     mainCategory:"Health and beauty"
   },
 
@@ -55,7 +55,7 @@ const defaultProducts = [
     rating: 4.7,
     reviews: 65,
     description:"Giant Home Teddy Bear Stuffed Animal Large Teddy Bear Cuddly Plush Toy For Girlfriend Kids 4ft 5ft 6ft",
-    category: "ThisMonth",
+    category: "This Month",
     mainCategory:"Baby's and Toys"
   },
   {
@@ -66,7 +66,7 @@ const defaultProducts = [
     image: "/img/dinner_gown.png",
     rating: 4.7,
     reviews: 65,
-    category: "ThisMonth",
+    category: "This Month",
     description:" simple, handy, convenient, comfortable and easy to handle wear.",
     mainCategory:"Women's Fashion"
   },
@@ -79,7 +79,7 @@ const defaultProducts = [
     image: "/img/nexus_machine.png",
     rating: 4.7,
     reviews: 65,
-    category: "ThisMonth",
+    category: "This Month",
     description:"This Nexus NX-WM-5SA  washing machine is the ideal laundry appliance for every household.",
     mainCategory:"Electronics"
   },
@@ -92,7 +92,7 @@ const defaultProducts = [
     image: "/img/quartz_watch.png",
     rating: 3,
     reviews: 35,
-    category: "OurProducts",
+    category: "Our Products",
     mainCategory:"Men's Fashion"
   },
   {
@@ -102,7 +102,7 @@ const defaultProducts = [
     image: "/img/camera.jpg",
     rating: 4,
     reviews: 95,
-    category: "OurProducts",
+    category: "Our Products",
     mainCategory:"Electronics"
   },
   {
@@ -112,7 +112,7 @@ const defaultProducts = [
     image: "/img/gamingLaptop2.jpg",
     rating: 5,
     reviews: 325,
-    category: "OurProducts",
+    category: "Our Products",
     mainCategory:"Gaming"
   },
   {
@@ -122,7 +122,7 @@ const defaultProducts = [
     image: "/img/dogfood.png",
     rating: 4,
     reviews: 145,
-    category: "OurProducts",
+    category: "Our Products",
     mainCategory:"Groceries and Pets"
   },
   {
@@ -132,7 +132,7 @@ const defaultProducts = [
     image: "/img/NewMercedesBenz.jpg",
     rating: 5,
     reviews: 65,
-    category: "OurProducts",
+    category: "Our Products",
     mainCategory:"Baby's and Toys"
   },
   {
@@ -142,7 +142,7 @@ const defaultProducts = [
     image: "/img/soccer_cleats.jpg",
     rating: 5,
     reviews: 35,
-    category: "OurProducts",
+    category: "Our Products",
     mainCategory:"Sports"
   },
   {
@@ -152,7 +152,7 @@ const defaultProducts = [
     image: "/img/GP11.jpg",
     rating: 4.5,
     reviews: 55,
-    category: "OurProducts",
+    category: "Our Products",
     mainCategory:"Gaming"
   },
   {
@@ -162,7 +162,7 @@ const defaultProducts = [
     image: "/img/QuiltedJacket.jpg",
     rating: 4.5,
     reviews: 55,
-    category: "OurProducts",
+    category: "Our Products",
     mainCategory:"Men's Fashion"
   },
 
@@ -176,21 +176,22 @@ const defaultProducts = [
     image: "/img/gamepad.jpg",
     rating: 4.7,
     reviews: 88,
-    category: "flashSales",
+    category: "Flash Sales",
     mainCategory:"Gaming",
     description:""
   },
   {
     id: 16,
-    title: "Women's Casual Polyester Palazo",
-    price: 850,
-    oldPrice: 1160,
-    discount: "-35%",
-    image: "/img/palazo_fashion.png",
-    rating: 4,
-    reviews: 75,
-    category: "flashSales",
-    mainCategory:"Women's Fashion"
+    title: "African Dashiki Men'S Long Sleeve Top",
+    price: 375,
+    oldPrice: 400,
+    discount: "-25%",
+    image: "/img/men_dashiki.png",
+    rating: 4.5,
+    reviews: 99,
+    description:"",
+    category: "Flash Sales",
+    mainCategory:"Men's Fashion"
   },
   {
     id: 17,
@@ -201,21 +202,20 @@ const defaultProducts = [
     image: "/img/monitor.jpg",
     rating: 4.5,
     reviews: 99,
-    category: "flashSales",
+    category: "Flash Sales",
     mainCategory:"Gaming"
   },
   {
     id: 18,
-    title: "African Dashiki Men'S Long Sleeve Top",
-    price: 375,
-    oldPrice: 400,
-    discount: "-25%",
-    image: "/img/men_dashiki.png",
-    rating: 4.5,
-    reviews: 99,
-    description:"",
-    category: "flashSales",
-    mainCategory:"Men's Fashion"
+    title: "Women's Casual Polyester Palazo",
+    price: 850,
+    oldPrice: 1160,
+    discount: "-35%",
+    image: "/img/palazo_fashion.png",
+    rating: 4,
+    reviews: 75,
+    category: "Flash Sales",
+    mainCategory:"Women's Fashion"
   },
   {
     id: 19,
@@ -226,7 +226,7 @@ const defaultProducts = [
     image: "/img/H10.jpg",
     rating: 4.5,
     reviews: 95,
-    category: "flashSales",
+    category: "Flash Sales",
     mainCategory:"Gaming"
   },
 ];

@@ -24,7 +24,7 @@ const LandingPage = () => {
   // const filteredProducts = defaultProducts.filter((product) =>
   //   product.title.toLowerCase().includes(searchTerm.toLowerCase()) );
 
-  const flashSales = defaultProducts.filter(p => p.category === "flashSales");
+  const flashSales = defaultProducts.filter(p => p.category === "Flash Sales");
 
 
   return (
@@ -74,7 +74,7 @@ const LandingPage = () => {
             <FlashSalesCarousel nextEl={nextRef} prevEl={prevRef} products={flashSales} />
 
             <div className="flex justify-center p-4">
-              <Link to="/all_products/flashSales" className="bg-orange-600 px-4 py-2 text-white">
+              <Link to="/all_products/Flash Sales" className="bg-orange-600 px-4 py-2 text-white">
                 View all Products
               </Link>
             </div>
@@ -88,7 +88,7 @@ const LandingPage = () => {
             </div>
             <div className="flex items-center flex-wrap justify-between">
               <p className="font-bold text-3xl m-1">Best Selling Products</p>
-              <Link to="/all_products/ThisMonth" className="bg-orange-700 px-6 py-2 text-white m-1">
+              <Link to="/all_products/This Month" className="bg-orange-700 px-6 py-2 text-white m-1">
                 View all
               </Link>
             </div>
@@ -124,7 +124,7 @@ const LandingPage = () => {
             <p className="font-bold text-3xl py-2 m-1">Explore Our Products</p>
             <OurProducts />
             <div className="flex justify-center p-8">
-              <Link to="/all_products/OurProducts" className="bg-orange-700 px-4 py-2 text-white">
+              <Link to="/all_products/Our Products" className="bg-orange-700 px-4 py-2 text-white">
                 View all Products
               </Link>
             </div>

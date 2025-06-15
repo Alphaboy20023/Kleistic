@@ -221,7 +221,7 @@ const ProductDetail = () => {
                                                     }
                                                 })}
                                             </div>
-                                            <div className="text-sm text-gray-600">{relatedProduct.reviews}</div>
+                                            <div className="text-sm text-gray-600">({relatedProduct.reviews})</div>
                                         </div>
                                     </div>
                                 </div>

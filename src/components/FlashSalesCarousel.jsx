@@ -20,7 +20,7 @@ const FlashSalesCarousel = forwardRef(({ products, nextEl, prevEl }, ref) => {
     }
 
 
-    const filteredProducts = defaultProducts.filter(p => p.category === 'flashSales');
+    const filteredProducts = defaultProducts.filter(p => p.category === 'Flash Sales');
     const items = filteredProducts.length ? filteredProducts : [];
 
     useEffect(() => {

@@ -6,7 +6,7 @@ import defaultProducts from "../data/product";
 
 const ThisMonth = () => {
 
-    const items = defaultProducts.filter(p => p.category === 'ThisMonth')
+    const items = defaultProducts.filter(p => p.category === 'This Month')
 
     return (
         //  bg-gray-100    #f3f4f6 
@@ -75,13 +75,11 @@ const ThisMonth = () => {
                                                 }
                                             })}
                                         </div>
-                                        <div className="text-sm text-gray-600">{product.reviews}</div>
+                                        <div className="text-sm text-gray-600">({product.reviews})</div>
                                     </div>
                                 </div>
                             </div>
                         </div>
-
-
                     ))}
                 </div>
             </div>

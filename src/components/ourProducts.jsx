@@ -4,7 +4,7 @@ import defaultProducts from "../data/product";
 
 const OurProducts = () => {
     
-    const items = defaultProducts.filter(p => p.category === 'OurProducts')
+    const items = defaultProducts.filter(p => p.category === 'Our Products')
 
     return (
         <>
@@ -72,7 +72,7 @@ const OurProducts = () => {
                                                 }
                                             })}
                                         </div>
-                                        <div className="text-sm text-gray-600">{product.reviews}</div>
+                                        <div className="text-sm text-gray-600">({product.reviews})</div>
                                     </div>
                                 </div>
                             </div>
