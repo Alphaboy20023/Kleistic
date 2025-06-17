@@ -11,7 +11,7 @@ const About = () => {
     return (
         <>
             <Navbar />
-            <div className="flex justify-center flex-wrap lg:flex-nowrap items-center pt-[240px] lg:pt-[160px] gap-5">
+            <div className="flex justify-center flex-wrap lg:flex-nowrap items-center pt-[220px] lg:pt-[160px] gap-5">
                 <div className="w-full space-y-9 lg:pl-[120px] p-5">
                     <h1 className="text-6xl font-semibold">Our Story</h1>
                     <p>Lorem Ipsum is simply dummy text of the printing and typesetting
@@ -26,7 +26,7 @@ const About = () => {
                 </div>
             </div>
 
-            <div className="flex justify-center gap-5 pb-6">
+            <div className="flex justify-center gap-5 pb-6 flex-wrap">
                 <div className="border flex border-gray-200 flex shadow-lg justify-center items-center flex-col p-5 space-y-1">
                     <div className="rounded-full bg-gray-300 p-4">
                         <GiFamilyHouse className="text-4xl" />
@@ -53,7 +53,7 @@ const About = () => {
                 </div>
             </div>
 
-            <section className="flex  justify-center gap-9 py-7">
+            <section className="flex  justify-center gap-9 py-7 flex-wrap  flex">
                 <aside className="">
                     <img src="" alt="founder" className="bg-gray-100 h-full" />
                     <h1>Tom Stevens</h1>
