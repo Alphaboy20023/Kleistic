@@ -19,7 +19,7 @@ const CategoryPage = () => {
         <>
             <Navbar />
 
-            <div className="p-6 pt-[245px] lg:pt-[130px] gap-3 lg:flex-row flex-col flex flex-wrap lg:gap-6">
+            <div className="p-6 pt-[245px] lg:pt-[130px] gap-3 lg:flex-row flex-col flex lg:flex-nowrap flex-wrap lg:gap-6">
                 <aside className=" flex  flex-col border-r-0 sm:border-r-2 px-3 lg:w-[15vw]">
                     {[
                         "Women's Fashion", "Men's Fashion", "Electronics", "Gaming",
