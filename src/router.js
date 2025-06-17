@@ -1,8 +1,8 @@
 import { Routes, Route } from 'react-router-dom';
 import LandingPage from "./pages/landingPage";
 import ProductDetail from './pages/productDetail';
-import Register from './pages/signUp';
-import Login from './pages/signIn';
+import Register from './pages/SignUp';
+import Login from './pages/SignIn'
 import Wishlist from './pages/wishlist';
 import Cart from './pages/cart';
 import Checkout from './pages/checkout';
