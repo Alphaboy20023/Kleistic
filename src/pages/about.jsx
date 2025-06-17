@@ -11,7 +11,7 @@ const About = () => {
     return (
         <>
             <Navbar />
-            <div className="flex justify-center flex-wrap lg:flex-nowrap items-center pt-[210px] lg:pt-[160px] gap-5">
+            <div className="flex justify-center flex-wrap lg:flex-nowrap items-center pt-[240px] lg:pt-[160px] gap-5">
                 <div className="w-full space-y-9 lg:pl-[120px] p-5">
                     <h1 className="text-6xl font-semibold">Our Story</h1>
                     <p>Lorem Ipsum is simply dummy text of the printing and typesetting

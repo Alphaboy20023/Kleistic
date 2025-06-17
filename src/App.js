@@ -1,4 +1,5 @@
 import NavBarLinks from "./router";
+import ScrollToTop from "./components/ScrollToTop";
 
 
 function App() {
@@ -21,6 +22,7 @@ function App() {
     // </div>
 
     <>
+    <ScrollToTop />
     <NavBarLinks />
   
     </>

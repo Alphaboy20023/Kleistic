@@ -9,7 +9,7 @@ const defaultProducts = [
     rating: 5,
     reviews: 65,
     category: "This Month",
-    mainCategory:"Men's Fashion"
+    mainCategory: "Men's Fashion"
   },
   {
     id: 2,
@@ -20,7 +20,7 @@ const defaultProducts = [
     rating: 4.7,
     reviews: 65,
     category: "This Month",
-    mainCategory:"Women's Fashion"
+    mainCategory: "Women's Fashion"
   },
   {
     id: 3,
@@ -31,8 +31,8 @@ const defaultProducts = [
     rating: 4.7,
     reviews: 65,
     category: "This Month",
-    mainCategory:"Electronics",
-    description:" JBL Pure Bass Sound: The JBL Tune 720BT features the renowned JBL Pure Bass sound, the same technology that powers the most famous venues all around the world. "
+    mainCategory: "Electronics",
+    description: " JBL Pure Bass Sound: The JBL Tune 720BT features the renowned JBL Pure Bass sound, the same technology that powers the most famous venues all around the world. "
   },
   {
     id: 4,
@@ -43,7 +43,7 @@ const defaultProducts = [
     rating: 4.7,
     reviews: 65,
     category: "This Month",
-    mainCategory:"Health and beauty"
+    mainCategory: "Health and beauty"
   },
 
   {
@@ -54,9 +54,9 @@ const defaultProducts = [
     image: "/img/Teddy_bear.png",
     rating: 4.7,
     reviews: 65,
-    description:"Giant Home Teddy Bear Stuffed Animal Large Teddy Bear Cuddly Plush Toy For Girlfriend Kids 4ft 5ft 6ft",
+    description: "Giant Home Teddy Bear Stuffed Animal Large Teddy Bear Cuddly Plush Toy For Girlfriend Kids 4ft 5ft 6ft",
     category: "This Month",
-    mainCategory:"Baby's and Toys"
+    mainCategory: "Baby's and Toys"
   },
   {
     id: 5,
@@ -67,8 +67,8 @@ const defaultProducts = [
     rating: 4.7,
     reviews: 65,
     category: "This Month",
-    description:" simple, handy, convenient, comfortable and easy to handle wear.",
-    mainCategory:"Women's Fashion"
+    description: " simple, handy, convenient, comfortable and easy to handle wear.",
+    mainCategory: "Women's Fashion"
   },
 
   {
@@ -80,8 +80,8 @@ const defaultProducts = [
     rating: 4.7,
     reviews: 65,
     category: "This Month",
-    description:"This Nexus NX-WM-5SA  washing machine is the ideal laundry appliance for every household.",
-    mainCategory:"Electronics"
+    description: "This Nexus NX-WM-5SA  washing machine is the ideal laundry appliance for every household.",
+    mainCategory: "Electronics"
   },
 
   // OurProducts products
@@ -93,7 +93,7 @@ const defaultProducts = [
     rating: 3,
     reviews: 35,
     category: "Our Products",
-    mainCategory:"Men's Fashion"
+    mainCategory: "Men's Fashion"
   },
   {
     id: 8,
@@ -103,7 +103,7 @@ const defaultProducts = [
     rating: 4,
     reviews: 95,
     category: "Our Products",
-    mainCategory:"Electronics"
+    mainCategory: "Electronics"
   },
   {
     id: 9,
@@ -113,7 +113,7 @@ const defaultProducts = [
     rating: 5,
     reviews: 325,
     category: "Our Products",
-    mainCategory:"Gaming"
+    mainCategory: "Gaming"
   },
   {
     id: 10,
@@ -123,7 +123,7 @@ const defaultProducts = [
     rating: 4,
     reviews: 145,
     category: "Our Products",
-    mainCategory:"Groceries and Pets"
+    mainCategory: "Groceries and Pets"
   },
   {
     id: 11,
@@ -133,7 +133,7 @@ const defaultProducts = [
     rating: 5,
     reviews: 65,
     category: "Our Products",
-    mainCategory:"Baby's and Toys"
+    mainCategory: "Baby's and Toys"
   },
   {
     id: 12,
@@ -143,7 +143,7 @@ const defaultProducts = [
     rating: 5,
     reviews: 35,
     category: "Our Products",
-    mainCategory:"Sports"
+    mainCategory: "Sports"
   },
   {
     id: 13,
@@ -153,7 +153,7 @@ const defaultProducts = [
     rating: 4.5,
     reviews: 55,
     category: "Our Products",
-    mainCategory:"Gaming"
+    mainCategory: "Gaming"
   },
   {
     id: 14,
@@ -163,7 +163,7 @@ const defaultProducts = [
     rating: 4.5,
     reviews: 55,
     category: "Our Products",
-    mainCategory:"Men's Fashion"
+    mainCategory: "Men's Fashion"
   },
 
   // FlashSales products
@@ -177,8 +177,8 @@ const defaultProducts = [
     rating: 4.7,
     reviews: 88,
     category: "Flash Sales",
-    mainCategory:"Gaming",
-    description:""
+    mainCategory: "Gaming",
+    description: ""
   },
   {
     id: 16,
@@ -189,9 +189,9 @@ const defaultProducts = [
     image: "/img/men_dashiki.png",
     rating: 4.5,
     reviews: 99,
-    description:"",
+    description: "",
     category: "Flash Sales",
-    mainCategory:"Men's Fashion"
+    mainCategory: "Men's Fashion"
   },
   {
     id: 17,
@@ -203,7 +203,7 @@ const defaultProducts = [
     rating: 4.5,
     reviews: 99,
     category: "Flash Sales",
-    mainCategory:"Gaming"
+    mainCategory: "Gaming"
   },
   {
     id: 18,
@@ -215,7 +215,7 @@ const defaultProducts = [
     rating: 4,
     reviews: 75,
     category: "Flash Sales",
-    mainCategory:"Women's Fashion"
+    mainCategory: "Women's Fashion"
   },
   {
     id: 19,
@@ -227,7 +227,20 @@ const defaultProducts = [
     rating: 4.5,
     reviews: 95,
     category: "Flash Sales",
-    mainCategory:"Gaming"
+    mainCategory: "Gaming"
+  },
+  {
+    id: 21,
+    title: "Body Lotion Nivea-400ML",
+    price: 230,
+    oldPrice: 280,
+    discount: "-26%",
+    image: "/img/body_lotion.jpg",
+    rating: 4.5,
+    reviews: 85,
+    category: "Flash Sales",
+    mainCategory: "Health and beauty",
+    description: "With the new NIVEA oil in lotion chocolate nurture, smooth away dry skin. An item having the beneficial properties of cocoa butter and coconut oil"
   },
 ];
 
