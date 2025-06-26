@@ -77,7 +77,7 @@ const Register = () => {
                     <div className=" relative gap-6 flex flex-col w-full justify-center py-[40px] px-[45px]">
                         {showAlert && status === "succeeded" && data?.user && (
                             <div className="p-1">
-                                <div className="absolute top-9 left-[19vh] -translate-x-1/3 lg:fixed lg:top-40 lg:left-auto lg:right-10 lg:translate-x-0 z-50 w-fit bg-green-100 border border-green-400 text-green-700 px-1 lg:px-3 lg:py-2 rounded shadow-lg text-sm sm:text-base transition-all duration-300 ease-in-out">
+                                <div className="absolute p-2 top-9 left-[19vh] -translate-x-1/3 lg:fixed lg:top-40 lg:left-auto lg:right-10 lg:translate-x-0 z-50 w-fit bg-green-100 border border-green-400 text-green-700 px-1 lg:px-3 lg:py-2 rounded shadow-lg text-sm sm:text-base transition-all duration-300 ease-in-out">
                                     <span>🎉 Registration successful!. Redirecting to Login</span>
                                     <span className="dot-animated inline-block">
                                         <span>.</span><span>.</span><span>.</span>
