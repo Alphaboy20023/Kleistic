@@ -1,12 +1,18 @@
 import { Link } from "react-router";
 import Navbar from "../components/Navbar";
 import Footer from "../components/Footer";
+import { useDispatch } from 'react-redux';
+import { logIn } from "../redux/authSlice";
 
 
 
 const Login = () => {
 
+    const dispatch = useDispatch();
 
+    const handleLogIn = () => {
+        dispatch(logIn({ username:"", password:''}))
+    }
 
     return (
         <>
@@ -34,7 +40,7 @@ const Login = () => {
                         </div>
                         <div className="flex flex-row items-center gap-4">
                             <div className="flex justify-center rounded text-white px-8 py-2 bg-green-700">
-                                <Link className="text-2xl">Login</Link>
+                                <button onClick={handleLogIn} className="text-2xl">Log In</button>
                             </div>
                             <div>
                                 <Link className="underline text-red-600">forgot password?</Link>

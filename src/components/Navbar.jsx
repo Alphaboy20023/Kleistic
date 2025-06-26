@@ -39,11 +39,13 @@ const Navbar = () => {
 
   const dispatch = useDispatch();
   const user = useSelector((state) => state.auth.data);
-  const isAuthenticated = !!user?.token;
+  const isAuthenticated = !!user?.tokens?.access;
 
   const handleLogout = () => {
     dispatch(logout());
   };
+
+  
 
   const cartItems = useSelector(state => state.cart.items);
   const itemCount = cartItems.reduce((acc, item) => acc + item.quantity, 0);
@@ -125,7 +127,7 @@ const Navbar = () => {
                     <div className="block hover:bg-gray-100">
                       {isAuthenticated ? (
                         <>
-                          <p>Welcome, {user.username}</p>
+                          {user?.username && <p>Welcome, {user.username}</p>}
                           <button onClick={handleLogout} className="text-red-500">Logout</button>
                         </>
                       ) : (

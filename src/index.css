@@ -17,6 +17,8 @@ code {
 }
 
 
+
+
 .shopnow{
   text-decoration: underline;
 }
@@ -31,6 +33,27 @@ code {
 .no-scrollbar {
   -ms-overflow-style: none;  
   scrollbar-width: none; 
+}
+
+
+@keyframes dot-flash {
+  0% { opacity: 0; }
+  20% { opacity: 1; }
+  100% { opacity: 0; }
+}
+
+.dot-animated span {
+  animation-name: dot-flash;
+  animation-duration: 1.2s;
+  animation-iteration-count: infinite;
+  animation-fill-mode: both;
+}
+
+.dot-animated span:nth-child(2) {
+  animation-delay: 0.2s;
+}
+.dot-animated span:nth-child(3) {
+  animation-delay: 0.4s;
 }
 
 
