@@ -185,7 +185,7 @@ const Register = () => {
                             </button>
                         </div>
 
-                        <div className="w-1/2 flex justify-center text-2xl text-white p-2 bg-green-700">
+                        <div className="w-1/2 flex justify-center text-sm lg:text-xl text-white p-2 bg-green-700">
                             <button onClick={handleRegister} className="flex items-center gap-2">
                                 {status === "loading" ? (
                                     <>
