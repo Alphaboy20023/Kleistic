@@ -1,5 +1,7 @@
 import NavBarLinks from "./router";
 import ScrollToTop from "./components/ScrollToTop";
+import { ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 
 function App() {
@@ -24,6 +26,7 @@ function App() {
     <>
     <ScrollToTop />
     <NavBarLinks />
+    <ToastContainer position="top-right" />
   
     </>
   );

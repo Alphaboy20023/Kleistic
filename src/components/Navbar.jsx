@@ -1,5 +1,5 @@
 import { useState, useRef, useEffect } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import SearchBtn from "./SearchButton";
 import { MdAccountCircle } from "react-icons/md";
 import { useDispatch, useSelector } from "react-redux";
@@ -12,6 +12,7 @@ const Navbar = () => {
 
   const [language, setLanguage] = useState("English");
   const dropdownRef = useRef(null);
+  const navigate = useNavigate();
 
   const changeLanguage = (lang) => {
     setLanguage(lang);
@@ -38,21 +39,22 @@ const Navbar = () => {
   }
 
   const dispatch = useDispatch();
-  const user = useSelector((state) => state.auth.data);
-  const isAuthenticated = !!user?.tokens?.access;
+
+
 
   const handleLogout = () => {
     dispatch(logout());
+    navigate('/login')
   };
 
-  
+
 
   const cartItems = useSelector(state => state.cart.items);
   const itemCount = cartItems.reduce((acc, item) => acc + item.quantity, 0);
 
-
-
-
+  const auth = useSelector(state => state.auth.data);
+  const username = auth?.user?.username;
+  const isAuthenticated = !!auth?.tokens?.access;
 
   return (
     <>
@@ -119,6 +121,9 @@ const Navbar = () => {
                 {openAccountDropdown && (
                   <div className="absolute right-0 w-[26vh] mt-2 bg-white p-3 space-y-1 text-black rounded bg-blur bg-gray-300 shadow-lg z-30">
                     <div className="w-full space-y-1">
+                      {isAuthenticated && username && (
+                        <p className="block text-blue-700 font-semibold text-[18px]">Hello, {username}</p>
+                      )}
                       <Link to="#" className="block hover:bg-gray-100">Manage My Account</Link>
                       <Link to="#" className="block hover:bg-gray-100">My Orders</Link>
                       <Link to="#" className="block hover:bg-gray-100">My Reviews</Link>
@@ -127,7 +132,6 @@ const Navbar = () => {
                     <div className="block hover:bg-gray-100">
                       {isAuthenticated ? (
                         <>
-                          {user?.username && <p>Welcome, {user.username}</p>}
                           <button onClick={handleLogout} className="text-red-500">Logout</button>
                         </>
                       ) : (
