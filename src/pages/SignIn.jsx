@@ -8,180 +8,198 @@ import { FiEye } from "react-icons/fi";
 import { IoMdEyeOff } from "react-icons/io";
 import { useNavigate } from "react-router";
 import { ImSpinner2 } from "react-icons/im";
+import { toast } from 'react-toastify';
+
+
+
+
 
 const Login = () => {
-  const [username, setUsername] = useState('');
-  const [password, setPassword] = useState('');
-  const [showAlert, setShowAlert] = useState(true);
-  const [focusedUsername, setFocusedUsername] = useState(false);
-  const [focusedPassword, setFocusedPassword] = useState(false);
-  const [viewPassword, setViewPassword] = useState(false);
-  const [clickedLogin, setClickedLogin] = useState(false);
 
-  const { status, error, data } = useSelector((state) => state.auth);
-  const dispatch = useDispatch();
-  const navigate = useNavigate();
 
-  const handleLogIn = () => {
-    if (!username || !password) {
-      setShowAlert(true);
-      alert("Please fill in both username and password");
-      return;
+    const [username, setUsername] = useState('');
+    const [password, setPassword] = useState('')
+    const [showAlert, setShowAlert] = useState(true);
+    const [focusedUsername, setFocusedUsername] = useState(false);
+    const [focusedPassword, setFocusedPassword] = useState(false);
+    const [viewPassword, setViewPassword] = useState(false)
+    const [clickedLogin, setClickedLogin] = useState(false);
+
+    const { status, error, data } = useSelector((state) => state.auth)
+    const auth = useSelector((state) => state.auth)
+    const dispatch = useDispatch();
+    const navigate = useNavigate();
+
+
+
+    const handleLogIn = () => {
+        if (!username || !password) {
+            setShowAlert(true)
+            alert("Please fill in both username and password");
+            return;
+        }
+        setClickedLogin(true);
+        dispatch(logIn({ username, password }))
     }
-    setClickedLogin(true);
-    dispatch(logIn({ username, password }));
-  };
 
-  useEffect(() => {
-    const justSignedUp = localStorage.getItem("justSignedUp");
+    useEffect(() => {
+        const justSignedUp = localStorage.getItem("justSignedUp");
 
-    if (status === 'succeeded' && data?.user && clickedLogin) {
-      setShowAlert(true);
+        if (status === 'succeeded' && data?.user && clickedLogin) {
+            if (!justSignedUp) {
+                toast.success(`Welcome back, ${data.user.username}!`, {
+                    pauseOnHover: false,
+                    position: "top-right",
+                });
+            }
 
-      const timer = setTimeout(() => {
-        setShowAlert(false);
+            setShowAlert(true); 
+
+            const timer = setTimeout(() => {
+                setShowAlert(false);
+                setClickedLogin(false);
+                navigate("/"); 
+                localStorage.removeItem("justSignedUp");
+            }, 4000);
+
+            return () => clearTimeout(timer);
+        }
+
+        if (error && clickedLogin) {
+            setShowAlert(true);
+            const timer = setTimeout(() => setShowAlert(false), 5000);
+            return () => clearTimeout(timer);
+        }
+    }, [status, error, data?.user, navigate, clickedLogin]);
+
+    useEffect(() => {
+        dispatch(resetAuth());
         setClickedLogin(false);
-        navigate("/");
-        localStorage.removeItem("justSignedUp");
-      }, 4000);
+    }, [dispatch]);
 
-      return () => clearTimeout(timer);
-    }
 
-    if (error && clickedLogin) {
-      setShowAlert(true);
-      const timer = setTimeout(() => setShowAlert(false), 5000);
-      return () => clearTimeout(timer);
-    }
-  }, [status, error, data?.user, navigate, clickedLogin]);
+    return (
+        <>
+            <Navbar />
+            <div className="pt-[190px] lg:pt-[130px]" >
+                <main className="my-9 flex flex-row gap-2 ">
+                    <div className=" w-full hidden lg:block">
+                        <img src="/img/Screenshot (24).png" alt="" className="w-[55vw] object-cover h-full" />
+                    </div>
 
-  useEffect(() => {
-    dispatch(resetAuth());
-    setClickedLogin(false);
-  }, [dispatch]);
 
-  return (
-    <>
-      <Navbar />
-      <div className="pt-[190px] lg:pt-[130px]">
-        <main className="my-9 flex flex-row gap-2">
-          <div className="w-full hidden lg:block">
-            <img src="/img/Screenshot (24).png" alt="" className="w-[55vw] object-cover h-full" />
-          </div>
+                    <div className=" gap-6 flex flex-col w-full justify-center py-[30px] px-[45px] ">
+                        <div>
+                            <h1 className="text-4xl font-semibold my-3">Login to Kleistic</h1>
+                            <p>Enter Your details below</p>
+                        </div>
 
-          <div className="gap-6 flex flex-col w-full justify-center py-[30px] px-[45px]">
-            <div>
-              <h1 className="text-4xl font-semibold my-3">Login to Kleistic</h1>
-              <p>Enter Your details below</p>
+                        {showAlert && status === "succeeded" && data?.user && (
+                            <div className="p-1">
+                                <div className="absolute p-2 top-9 left-[19vh] -translate-x-1/3 lg:fixed lg:top-40 lg:left-auto lg:right-10 lg:translate-x-0 z-50 w-fit bg-green-100 border border-green-400 text-green-700 px-1 lg:px-3 lg:py-2 rounded shadow-lg text-sm sm:text-base transition-all duration-300 ease-in-out">
+                                    <span className="text-bold">Login successful!. Redirecting to home page</span>
+                                    <span className="dot-animated inline-block">
+                                        <span>.</span><span>.</span><span>.</span>
+                                    </span>
+                                </div>
+                            </div>
+                        )}
+
+                        {showAlert && error && typeof error === "object" ? (
+                            <div className="absolute p-2 top-9 left-[19vh] -translate-x-1/3 lg:fixed lg:top-40 lg:left-auto lg:right-10 lg:translate-x-0 z-50 w-fit bg-red-100 border border-red-700 text-red-700 px-1 lg:px-3 lg:py-2 rounded shadow-lg text-sm sm:text-base transition-all duration-300 ease-in-out">
+                                <ul>
+                                    {Object.entries(error).map(([field, errors]) =>
+                                        errors.map((err, i) => (
+                                            <li key={field + i}>
+                                                {field}: {err}
+                                            </li>
+                                        ))
+                                    )}
+                                </ul>
+                            </div>
+                        ) : showAlert && error ? (
+                            <div className="absolute p-2 top-9 left-[19vh] -translate-x-1/3 lg:fixed lg:top-40 lg:left-auto lg:right-10 lg:translate-x-0 z-50 w-fit bg-red-100 border border-red-700 text-red-700 px-1 lg:px-3 lg:py-2 rounded shadow-lg text-sm sm:text-base transition-all duration-300 ease-in-out">
+                                {error}
+                            </div>
+                        ) : null}
+
+
+                        <div className="relative w-75">
+                            <input
+                                type="username"
+                                id="username"
+                                value={username}
+                                onChange={e => setUsername(e.target.value)}
+                                onFocus={() => setFocusedUsername(true)}
+                                onBlur={() => setFocusedUsername(false)}
+                                className="w-full border-b focus:outline-none py-1 focus:border-orange-600 focus:border-b-2 transition-colors"
+                                required
+                            />
+                            <label
+                                htmlFor="username"
+                                className={`absolute left-0 text-gray-700 transition-all ${username.length > 0 || focusedUsername
+                                    ? "top-[-1rem] text-xs text-orange-600"
+                                    : "top-1 text-base"
+                                    }`}>
+                                Username
+                            </label>
+                        </div>
+                        <div className="relative w-75">
+                            <input
+                                type={viewPassword ? "text" : "password"}
+                                id="password"
+                                value={password}
+                                onChange={(e) => setPassword(e.target.value)}
+                                onFocus={() => setFocusedPassword(true)}
+                                onBlur={() => setFocusedPassword(false)}
+                                className="w-full border-b focus:outline-none py-1 focus:border-orange-600 focus:border-b-2 transition-colors pr-10"
+                                required
+                            />
+                            <label
+                                htmlFor="password"
+                                className={`absolute left-0 text-gray-700 transition-all ${password.length > 0 || focusedPassword
+                                    ? "top-[-1rem] text-xs text-orange-600"
+                                    : "top-1 text-base"
+                                    }`}
+                            >
+                                Password
+                            </label>
+                            <button
+                                type="button"
+                                onClick={() => setViewPassword(!viewPassword)}
+                                className="absolute right-0 top-1/2 transform -translate-y-1/2 text-gray-500 hover:text-red-600"
+                            >
+                                {viewPassword ? (
+                                    <IoMdEyeOff className="text-xl" />
+                                ) : (
+                                    <FiEye className="text-xl" />
+                                )}
+                            </button>
+                        </div>
+                        <div className="flex flex-row items-center gap-4">
+                            <div className="w-1/2 flex justify-center text-sm lg:text-xl text-white p-2 bg-green-700">
+                                <button onClick={handleLogIn} className="flex items-center gap-2">
+                                    {status === "loading" ? (
+                                        <>
+                                            <ImSpinner2 className="animate-spin" />
+                                            logging in...
+                                        </>
+                                    ) : (
+                                        "Log In"
+                                    )}
+                                </button>
+                            </div>
+                            <div>
+                                <Link className="underline text-red-600">forgot password?</Link>
+                            </div>
+                        </div>
+
+                    </div>
+                </main>
             </div>
+            <Footer />
+        </>
+    )
+}
 
-            {showAlert && status === "succeeded" && data?.user && !localStorage.getItem("justSignedUp") && (
-              <div className="p-1">
-                <div className="absolute p-2 top-9 left-[19vh] -translate-x-1/3 lg:fixed lg:top-40 lg:left-auto lg:right-10 lg:translate-x-0 z-50 w-fit bg-green-100 border border-green-400 text-green-700 px-1 lg:px-3 lg:py-2 rounded shadow-lg text-sm sm:text-base transition-all duration-300 ease-in-out">
-                  <span className="text-bold">Login successful! Redirecting to home page</span>
-                  <span className="dot-animated inline-block">
-                    <span>.</span><span>.</span><span>.</span>
-                  </span>
-                </div>
-              </div>
-            )}
-
-            {showAlert && error && typeof error === "object" ? (
-              <div className="absolute p-2 top-9 left-[19vh] -translate-x-1/3 lg:fixed lg:top-40 lg:left-auto lg:right-10 lg:translate-x-0 z-50 w-fit bg-red-100 border border-red-700 text-red-700 px-1 lg:px-3 lg:py-2 rounded shadow-lg text-sm sm:text-base transition-all duration-300 ease-in-out">
-                <ul>
-                  {Object.entries(error).map(([field, errors]) =>
-                    errors.map((err, i) => (
-                      <li key={field + i}>
-                        {field}: {err}
-                      </li>
-                    ))
-                  )}
-                </ul>
-              </div>
-            ) : showAlert && error ? (
-              <div className="absolute p-2 top-9 left-[19vh] -translate-x-1/3 lg:fixed lg:top-40 lg:left-auto lg:right-10 lg:translate-x-0 z-50 w-fit bg-red-100 border border-red-700 text-red-700 px-1 lg:px-3 lg:py-2 rounded shadow-lg text-sm sm:text-base transition-all duration-300 ease-in-out">
-                {error}
-              </div>
-            ) : null}
-
-            <div className="relative w-75">
-              <input
-                type="text"
-                id="username"
-                value={username}
-                onChange={e => setUsername(e.target.value)}
-                onFocus={() => setFocusedUsername(true)}
-                onBlur={() => setFocusedUsername(false)}
-                className="w-full border-b focus:outline-none py-1 focus:border-orange-600 focus:border-b-2 transition-colors"
-                required
-              />
-              <label
-                htmlFor="username"
-                className={`absolute left-0 text-gray-700 transition-all ${username.length > 0 || focusedUsername
-                  ? "top-[-1rem] text-xs text-orange-600"
-                  : "top-1 text-base"
-                  }`}
-              >
-                Username
-              </label>
-            </div>
-
-            <div className="relative w-75">
-              <input
-                type={viewPassword ? "text" : "password"}
-                id="password"
-                value={password}
-                onChange={(e) => setPassword(e.target.value)}
-                onFocus={() => setFocusedPassword(true)}
-                onBlur={() => setFocusedPassword(false)}
-                className="w-full border-b focus:outline-none py-1 focus:border-orange-600 focus:border-b-2 transition-colors pr-10"
-                required
-              />
-              <label
-                htmlFor="password"
-                className={`absolute left-0 text-gray-700 transition-all ${password.length > 0 || focusedPassword
-                  ? "top-[-1rem] text-xs text-orange-600"
-                  : "top-1 text-base"
-                  }`}
-              >
-                Password
-              </label>
-              <button
-                type="button"
-                onClick={() => setViewPassword(!viewPassword)}
-                className="absolute right-0 top-1/2 transform -translate-y-1/2 text-gray-500 hover:text-red-600"
-              >
-                {viewPassword ? (
-                  <IoMdEyeOff className="text-xl" />
-                ) : (
-                  <FiEye className="text-xl" />
-                )}
-              </button>
-            </div>
-
-            <div className="flex flex-row items-center gap-4">
-              <div className="w-1/2 flex justify-center text-sm lg:text-xl text-white p-2 bg-green-700">
-                <button onClick={handleLogIn} className="flex items-center gap-2">
-                  {status === "loading" ? (
-                    <>
-                      <ImSpinner2 className="animate-spin" />
-                      logging in...
-                    </>
-                  ) : (
-                    "Log In"
-                  )}
-                </button>
-              </div>
-              <div>
-                <Link className="underline text-red-600">forgot password?</Link>
-              </div>
-            </div>
-          </div>
-        </main>
-      </div>
-      <Footer />
-    </>
-  );
-};
-
-export default Login;
+export default Login

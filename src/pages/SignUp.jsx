@@ -1,3 +1,4 @@
+
 import { Link } from "react-router-dom";
 import Navbar from "../components/Navbar";
 import Footer from "../components/Footer";
@@ -9,6 +10,7 @@ import { ImSpinner2 } from "react-icons/im";
 import { useNavigate } from "react-router-dom";
 import { FiEye } from "react-icons/fi";
 import { IoMdEyeOff } from "react-icons/io";
+import { toast } from 'react-toastify';
 
 const Register = () => {
   const [formData, setFormData] = useState({
@@ -44,6 +46,7 @@ const Register = () => {
 
     if (status === 'succeeded' && data?.user) {
       setShowAlert(true);
+      toast.success(`🎉 Welcome to Kleistic, ${data.user.username}!`, { autoClose: 3000});
       timer = setTimeout(() => {
         setShowAlert(false);
         navigate("/login");
@@ -166,4 +169,8 @@ const Register = () => {
   );
 };
 
-export default Register;
+export default Register; 
+
+
+
+
