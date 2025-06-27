@@ -26,7 +26,7 @@ const Login = () => {
     const [clickedLogin, setClickedLogin] = useState(false);
 
     const { status, error, data } = useSelector((state) => state.auth)
-    const auth = useSelector((state) => state.auth)
+    // const auth = useSelector((state) => state.auth)
     const dispatch = useDispatch();
     const navigate = useNavigate();
 
