@@ -2,7 +2,7 @@ import Navbar from "../components/Navbar";
 import Footer from "../components/Footer";
 import { Link } from "react-router";
 import { useSelector, useDispatch } from "react-redux";
-import { removeFromCart, addToCart, decreaseQuantity } from "../redux/cartSlice"; 
+import { removeFromCart, addToCart, decreaseQuantity } from "../redux/cartSlice";
 import defaultProducts from "../data/product";
 
 const Cart = () => {
@@ -24,11 +24,12 @@ const Cart = () => {
 
     const cartInfo = cartItems.map(cartItem => {
         const product = defaultProducts.find(p => String(p.id) === String(cartItem.id));
+        if (!product || cartItem.quantity <= 0) return null;
         return {
             ...cartItem,
             ...product,
-        }
-    })
+        };
+    }).filter(Boolean)
 
     // console.log(cartInfo);
     const subtotal = cartItems.reduce((acc, item) => acc + item.price * item.quantity, 0.00)
@@ -40,7 +41,7 @@ const Cart = () => {
     return (
         <>
             <Navbar />
-            <div className="pt-[180px] lg:pt-[110px] ">
+            <div className="pt-[105px] lg:pt-[110px] ">
                 <main className="flex justify-center h-full max-w-6xl mx-auto py-11 flex-col gap-3">
                     <table className="w-full max-w-6xl mx-auto border-separate border-spacing-y-5">
                         <thead>
@@ -100,7 +101,7 @@ const Cart = () => {
                             <Link to="#clearall" className="border-gray border p-2 rounded border-shadow text-xl hover:bg-orange-600 hover:text-white">Clear Cart</Link>
                         </div>
                     </div>
-                   
+
                     <div className="flex flex-wrap gap-4 p-4 lg:p-1">
                         <div className="flex space-x-6 h-12">
                             <input type="text" placeholder="coupon code"
@@ -124,8 +125,23 @@ const Cart = () => {
                                 <p>${total.toFixed(2)}</p>
                             </div>
                             <div className="mt-4 lg:w-1/2 flex justify-center ml-auto mr-auto">
-                                <Link to="/checkout" className="p-2 text-xl block bg-orange-600 text-white text-center py-2">Proceed to Checkout</Link>
+                                {cartInfo.length > 0 ? (
+                                    <Link
+                                        to="/checkout"
+                                        className="p-2 text-xl block bg-orange-600 text-white text-center py-2 rounded hover:bg-orange-700"
+                                    >
+                                        Proceed to Checkout
+                                    </Link>
+                                ) : (
+                                    <span
+                                        className="p-2 text-xl block bg-gray-400 text-white text-center py-2 rounded cursor-not-allowed"
+                                        title="Add items to cart before checking out"
+                                    >
+                                        Proceed to Checkout
+                                    </span>
+                                )}
                             </div>
+
                         </div>
                     </div>
 

@@ -32,7 +32,7 @@ const LandingPage = () => {
       <Navbar />
 
       {/* Hero Section */}
-      <main className="pt-[220px] lg:pt-[125px]">
+      <main className="pt-[120px] lg:pt-[95px]">
 
         <div className="py-7 flex flex-col sm:flex-row gap-8 sm:pl-4 sm:py-4 lg:mt-5 max-w-[1400px] mx-auto">
           <aside className="ml-8 flex flex-col border-r-0 sm:border-r-2 px-6">

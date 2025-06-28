@@ -35,22 +35,40 @@ const cartSlice = createSlice({
             const { productId, quantity } = action.payload;
             const existingItem = state.items.find(item => item.id === productId);
             if (existingItem) {
-                existingItem.quantity = quantity;
-                localStorage.setItem("cart", JSON.stringify(state.items));
+                if (quantity <=0) {
+                    state.items = state.items.filter(i => i.id !== productId)
+                } else {
+                    existingItem.quantity = quantity;
+                }
             }
+
+            localStorage.setItem('cart', JSON.stringify(state.items))
         },
 
         removeFromCart: (state, action) => {
-            state.items = state.items.filter(i => i.id !== action.payload);
+            const itemIndex= state.items.findIndex(i => i.id === action.payload);
 
-            localStorage.setItem("cart", JSON.stringify(state.items));
+            if (itemIndex !== -1) {
+                if (state.items[itemIndex].quantity > 1) {
+                    state.items[itemIndex].quantity -= 1;
+                } else {
+                    state.items.splice(itemIndex, 1)
+                }
+            }
+
+            localStorage.setItem('cart', JSON.stringify(state.items))
         },
 
         decreaseQuantity: (state, action) => {
             const item = state.items.find(i => i.id === action.payload);
-            if (item && item.quantity > 1) {
-                item.quantity -= 1;
-            }
+
+            if (item) {
+                if (item.quantity > 1) {
+                    item.quantity -=1;
+                } else {
+                    state.items= state.items.filter(i => i.id !==action.payload)
+                }
+            } 
 
             localStorage.setItem("cart", JSON.stringify(state.items));
         },

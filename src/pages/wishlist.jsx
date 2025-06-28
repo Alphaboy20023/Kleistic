@@ -9,7 +9,7 @@ const Wishlist = () => {
     return (
         <>
             <Navbar />
-            <div className="pt-[240px] lg:pt-[130px]">
+            <div className="pt-[150px] lg:pt-[110px]">
                 <main className="">
                     <div className="flex justify-between items-center p-3 ">
                         <p className="text-2xl">Wishlist ()</p>

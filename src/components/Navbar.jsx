@@ -4,6 +4,7 @@ import SearchBtn from "./SearchButton";
 import { MdAccountCircle } from "react-icons/md";
 import { useDispatch, useSelector } from "react-redux";
 import { logout } from "../redux/authSlice";
+import { CgLogOut } from "react-icons/cg";
 
 const Navbar = () => {
   const [open, setOpen] = useState(false);
@@ -12,16 +13,23 @@ const Navbar = () => {
 
   const [language, setLanguage] = useState("English");
   const dropdownRef = useRef(null);
-  const navigate = useNavigate();
+  const langdropdownRef = useRef(null);
+  const navigate = useNavigate(); 
 
   const changeLanguage = (lang) => {
     setLanguage(lang);
     setOpenDropDown(false);
+    //  console.log("Language changed to:", lang);
   };
 
   useEffect(() => {
     const handleClickOutside = (event) => {
-      if (dropdownRef.current && !dropdownRef.current.contains(event.target)) {
+      if (!langdropdownRef.current && !langdropdownRef.current.contains(event.target)) {
+        setOpenDropDown(false);
+        setOpenAccountDropdown(false)
+      }
+
+      if (!dropdownRef.current && !dropdownRef.current.contains(event.target)) {
         setOpenDropDown(false);
         setOpenAccountDropdown(false)
       }
@@ -34,6 +42,7 @@ const Navbar = () => {
     if (!isAuthenticated) {
       window.location.href = '/login';
     } else {
+      setOpen(false);
       setOpenAccountDropdown((prev) => !prev);
     }
   }
@@ -60,22 +69,24 @@ const Navbar = () => {
     <>
       {/* Top bar */}
       <div className="fixed top-0 left-0 right-0 z-40">
-        <div className="  w-full bg-orange-600 text-white flex flex-col sm:flex-row justify-between items-center p-3 text-sm">
-          <div className="hidden sm:block w-20" />
-          <div className="flex flex-col sm:flex-row items-center text-center gap-3">
-            <p>
-              Winter sale for all swim suits and free express delivery - 50% off
-            </p>
-            <Link to="#shop" className="underline ">
-              Shop now
-            </Link>
+        <div className="w-full bg-orange-600 text-white flex items-center px-4 py-3 relative text-sm">
+          
+          <div className="flex-1 overflow-hidden">
+            <div className="hover:[animation-play-state:paused] animate-marquee whitespace-nowrap flex items-center gap-8 min-w-max">
+              {Array(5).fill(0).map((_, i) => (
+                <div key={i} className="flex items-center gap-2 text-[19px]">
+                  <p>Winter sale for all swim suits and free express delivery - 50% off</p>
+                  <Link to="#shop" className="underline whitespace-nowrap">Shop now</Link>
+                </div>
+              ))}
+            </div>
           </div>
 
 
-          <div className="relative inline-block text-left" ref={dropdownRef}>
+          <div className="ml-4 relative z-50" ref={langdropdownRef}>
             <button
               onClick={() => setOpenDropDown(!openDropDown)}
-              className="text-white px-14 py-1 hover:underline"
+              className="text-white font-semibold hover:underline"
             >
               {language}
             </button>
@@ -95,8 +106,9 @@ const Navbar = () => {
           </div>
         </div>
 
+
         {/* Main navbar */}
-        <div className="bg-white text-black p-2 py-4 border-b">
+        <div className="bg-white text-black p-2 py-3 border-b">
           <div className="container mx-auto flex justify-between items-center flex-wrap gap-2 sm:gap-0">
             <h1 className="text-xl font-bold mr-4 text-blue-700">KLEISTIC</h1>
 
@@ -105,7 +117,9 @@ const Navbar = () => {
               <li><Link to="/" className="hover:underline hover:underline-offset-4">Home</Link></li>
               <li><Link to="/contact" className="hover:underline hover:underline-offset-4">Contact</Link></li>
               <li><Link to="/about" className="hover:underline hover:underline-offset-4">About</Link></li>
-              <li><Link to="/register" className="hover:underline hover:underline-offset-4">Sign Up</Link></li>
+              {!isAuthenticated && (
+                <li><Link to="/register" className="hover:underline hover:underline-offset-4">Sign Up</Link></li>
+              )}
             </ul>
 
 
@@ -132,7 +146,7 @@ const Navbar = () => {
                     <div className="block hover:bg-gray-100">
                       {isAuthenticated ? (
                         <>
-                          <button onClick={handleLogout} className="text-red-500">Logout</button>
+                          <button onClick={handleLogout} className="text-red-500 flex items-center  text-md"><CgLogOut className="text-[20px]" /> <span>Logout</span></button>
                         </>
                       ) : (
                         <Link to="/login">Login</Link>
@@ -170,11 +184,18 @@ const Navbar = () => {
               <li><Link to="/" className="hover:underline hover:underline-offset-4">Home</Link></li>
               <li><Link to="/contact" className="hover:underline hover:underline-offset-4">Contact</Link></li>
               <li><Link to="/about" className="hover:underline hover:underline-offset-4">About</Link></li>
-              <li><Link to="/register" className="hover:underline hover:underline-offset-4">Sign Up</Link></li>
+              {isAuthenticated ? (
+                <>
+                  <li><button onClick={handleLogout} className="text-red-500 font-semibold flex items-center  text-md"><CgLogOut className="text-[20px]" /> <span>Logout</span></button></li>
+                </>
+              ) : (
+                <li><Link to="/login">Login</Link></li>
+              )}
             </ul>
           )}
         </div>
       </div>
+
     </>
   );
 };

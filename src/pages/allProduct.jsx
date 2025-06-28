@@ -24,7 +24,7 @@ const AllProducts = () => {
     return (
         <>
             <Navbar />
-            <div className="max-w-[1200px] mx-auto px-4 py-8 lg:pt-[75px] pt-[190px]">
+            <div className="max-w-[1200px] mx-auto px-4 py-8 lg:pt-[75px] sm:pt-[60px] pt-[100px]">
                 {/* <div> home </div> */}
                 {filteredProducts.length ? (
                     <div className="pt-[50px] p-1 w-[100%]">

@@ -6,17 +6,14 @@ import { Link } from "react-router-dom";
 const Checkout = () => {
     const cartItems = useSelector((state) => state.cart.items);
 
-    const subtotal = cartItems.reduce(
-        (total, item) => total + item.price * (item.quantity || 1),
-        0
-    );
+    const subtotal = cartItems.filter(item => item.quantity > 0).reduce((total, item) => total + item.price * item.quantity, 0)
     const shipping = 25;
     const total = subtotal + shipping;
 
     return (
         <>
             <Navbar />
-            <div className="lg:pt-[160px] pt-[240px] md:pt-[200px] sm:pt-[150px] p-4 gap-2 lg:p-9 flex lg:flex-nowrap flex-wrap md:flex-nowrap sm:flex-nowrap lg:pl-[80px] lg:gap-7">
+            <div className="lg:pt-[140px] pt-[160px] md:pt-[200px] sm:pt-[150px] p-4 gap-2 lg:p-9 flex lg:flex-nowrap flex-wrap md:flex-nowrap sm:flex-nowrap lg:pl-[80px] lg:gap-7">
 
                 {/* Billing Form */}
                 <div className="space-y-5 w-full max-w-7xl">
@@ -50,29 +47,31 @@ const Checkout = () => {
 
                 <section className="pt-[80px] w-full lg:px-9 px-4 space-y-5">
                     <h2 className="text-xl font-bold">Order Summary</h2>
-                    {cartItems.map((item) => (
-                        <div
-                            key={item.id}
-                            className="flex items-center justify-between border-b pb-2"
-                        >
-                            <div className="flex items-center space-x-3">
-                                <img
-                                    src={item.image || "/img/placeholder.jpg"}
-                                    alt={item.title}
-                                    className="w-16 h-16 object-cover rounded"
-                                />
-                                <div>
-                                    <p className="font-medium">{item.title}</p>
-                                    <p className="text-sm text-gray-600">
-                                        Qty: {item.quantity || 1}
-                                    </p>
+                    {cartItems
+                        .filter(item => item.quantity > 0)
+                        .map((item) => (
+                            <div
+                                key={item.id}
+                                className="flex items-center justify-between border-b pb-2"
+                            >
+                                <div className="flex items-center space-x-3">
+                                    <img
+                                        src={item.image || "/img/placeholder.jpg"}
+                                        alt={item.title}
+                                        className="w-16 h-16 object-cover rounded"
+                                    />
+                                    <div>
+                                        <p className="font-medium">{item.title}</p>
+                                        <p className="text-sm text-gray-600">
+                                            Qty: {item.quantity || 1}
+                                        </p>
+                                    </div>
                                 </div>
+                                <p className="font-semibold">
+                                    ${(item.price * (item.quantity || 1)).toFixed(2)}
+                                </p>
                             </div>
-                            <p className="font-semibold">
-                                ${(item.price * (item.quantity || 1)).toFixed(2)}
-                            </p>
-                        </div>
-                    ))}
+                        ))}
 
                     <div className="flex justify-between border-b border-gray-300 p-2">
                         <p>Subtotal:</p>

@@ -60,7 +60,7 @@ const ProductDetail = () => {
     return (
         <>
             <Navbar />
-            <div className="p-5 flex justify-center pt-[260px] lg:pt-[140px] ">
+            <div className="p-5 flex justify-center pt-[180px] lg:pt-[140px] ">
                 <div className="flex px-3 lg:px-7 gap-5 flex-wrap lg:flex-nowrap">
                     <div className="flex gap-4 w-full justify-center">
                         <div className="flex flex-col space-y-3 max-w-[10.5vw] sm:w-[20vw] md:w-[33.333vw] lg:max-h-[24vh]">

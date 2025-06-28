@@ -53,12 +53,12 @@ const Login = () => {
                 });
             }
 
-            setShowAlert(true); 
+            setShowAlert(true);
 
             const timer = setTimeout(() => {
                 setShowAlert(false);
                 setClickedLogin(false);
-                navigate("/"); 
+                navigate("/");
                 localStorage.removeItem("justSignedUp");
             }, 4000);
 
@@ -81,7 +81,7 @@ const Login = () => {
     return (
         <>
             <Navbar />
-            <div className="pt-[190px] lg:pt-[130px]" >
+            <div className="pt-[87px] lg:pt-[95px]" >
                 <main className="my-9 flex flex-row gap-2 ">
                     <div className=" w-full hidden lg:block">
                         <img src="/img/Screenshot (24).png" alt="" className="w-[55vw] object-cover h-full" />
@@ -177,21 +177,23 @@ const Login = () => {
                             </button>
                         </div>
                         <div className="flex flex-row items-center gap-4">
-                            <div className="w-1/2 flex justify-center text-sm lg:text-xl text-white p-2 bg-green-700">
-                                <button onClick={handleLogIn} className="flex items-center gap-2">
-                                    {status === "loading" ? (
-                                        <>
-                                            <ImSpinner2 className="animate-spin" />
-                                            logging in...
-                                        </>
-                                    ) : (
-                                        "Log In"
-                                    )}
-                                </button>
-                            </div>
+                            <button onClick={handleLogIn} className="flex items-center justify-center text-white gap-2 bg-green-700 p-2 w-1/3 text-xl">
+                                {status === "loading" ? (
+                                    <>
+                                        <ImSpinner2 className="animate-spin" />
+                                        logging in...
+                                    </>
+                                ) : (
+                                    "Log In"
+                                )}
+                            </button>
                             <div>
                                 <Link className="underline text-red-600">forgot password?</Link>
                             </div>
+                        </div>
+
+                        <div className="flex justify-center">
+                            <span className="text-xl">Don't have an account? <Link to="/register" className="underline text-black-600">Sign Up</Link></span>
                         </div>
 
                     </div>
