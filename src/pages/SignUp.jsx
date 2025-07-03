@@ -11,6 +11,8 @@ import { useNavigate } from "react-router-dom";
 import { FiEye } from "react-icons/fi";
 import { IoMdEyeOff } from "react-icons/io";
 import { toast } from 'react-toastify';
+import { auth, googleProvider } from "../firebase";
+import { signInWithPopup } from "firebase/auth";
 
 const Register = () => {
   const [formData, setFormData] = useState({
@@ -46,7 +48,7 @@ const Register = () => {
 
     if (status === 'succeeded' && data?.user) {
       setShowAlert(true);
-      toast.success(`🎉 Welcome to Kleistic, ${data.user.username}!`, { autoClose: 3000});
+      toast.success(`🎉 Welcome to Kleistic, ${data.user.username}!`, { autoClose: 3000 });
       timer = setTimeout(() => {
         setShowAlert(false);
         navigate("/login");
@@ -68,6 +70,36 @@ const Register = () => {
 
   const handleFocus = (field, value) => () => {
     setFocused(prev => ({ ...prev, [field]: value }));
+  };
+
+
+  const handleGoogleSignUp = async () => {
+    try {
+      const res = await signInWithPopup(auth, googleProvider);
+      const user = res.user;
+
+      const idToken = await user.getIdToken(); // 🔐 Get secure Firebase token
+
+      // Send token to Django backend
+      const response = await fetch("http://localhost:8000/auth/api/google-login/", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ token: idToken }),
+      });
+
+      if (!response.ok) throw new Error("Backend rejected token");
+
+      const data = await response.json();
+      
+      localStorage.setItem("access_token", data.tokens.access); 
+
+      navigate("/");
+
+    } catch (error) {
+      console.error("Google Sign-In Error", error);
+    }
   };
 
   return (
@@ -116,11 +148,10 @@ const Register = () => {
                 />
                 <label
                   htmlFor={field}
-                  className={`absolute left-0 text-gray-700 transition-all ${
-                    formData[field].length > 0 || focused[field]
-                      ? "top-[-1rem] text-xs text-orange-600"
-                      : "top-1 text-base"
-                  }`}
+                  className={`absolute left-0 text-gray-700 transition-all ${formData[field].length > 0 || focused[field]
+                    ? "top-[-1rem] text-xs text-orange-600"
+                    : "top-1 text-base"
+                    }`}
                 >
                   {field.charAt(0).toUpperCase() + field.slice(1)}
                 </label>
@@ -150,12 +181,13 @@ const Register = () => {
               </button>
             </div>
 
-            <Link to="##" className="relative cursor-pointer">
-              <FcGoogle className="top-4 left-[2vh] sm:left-[37vh] lg:left-[25vh] absolute text-2xl" />
-              <div className="flex justify-center text-2xl text-black p-2 bg-white border-2">
-                <p>Sign up with Google</p>
-              </div>
-            </Link>
+            <button
+              onClick={handleGoogleSignUp}
+              className="flex items-center justify-center gap-3 px-4 py-2 border-2 border-gray-300 rounded-md bg-white text-black hover:shadow-md transition duration-200 w-full max-w-xs mx-auto"
+            >
+              <FcGoogle className="text-2xl" />
+              <span className="text-base sm:text-lg font-medium">Sign up with Google</span>
+            </button>
 
             <div className="flex justify-center">
               <p className="mr-2">Already have an account?</p>
@@ -169,7 +201,9 @@ const Register = () => {
   );
 };
 
-export default Register; 
+export default Register;
+
+
 
 
 

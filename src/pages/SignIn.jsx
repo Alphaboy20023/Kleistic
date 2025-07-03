@@ -96,7 +96,7 @@ const Login = () => {
 
                         {showAlert && status === "succeeded" && data?.user && (
                             <div className="p-1">
-                                <div className="absolute p-2 top-20 left-[19vh] -translate-x-1/3 lg:fixed lg:top-40 lg:left-auto lg:right-10 lg:translate-x-0 z-50 w-fit bg-green-100 border border-green-400 text-green-700 px-1 lg:px-3 lg:py-2 rounded shadow-lg text-sm sm:text-base transition-all duration-300 ease-in-out">
+                                <div className="fixed top-40 right-7 z-50 w-fit bg-red-100 border border-red-700 text-red-700 px-3 py-2 rounded shadow-lg text-sm sm:text-base transition-all duration-300 ease-in-out">
                                     <span className="text-bold">Login successful!. Redirecting to home page</span>
                                     <span className="dot-animated inline-block">
                                         <span>.</span><span>.</span><span>.</span>
