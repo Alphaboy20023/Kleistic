@@ -13,6 +13,7 @@ import { IoMdEyeOff } from "react-icons/io";
 import { toast } from 'react-toastify';
 import { auth, googleProvider } from "../firebase";
 import { signInWithPopup } from "firebase/auth";
+import { signOut } from "firebase/auth";
 
 const Register = () => {
   const [formData, setFormData] = useState({
@@ -75,13 +76,16 @@ const Register = () => {
 
   const handleGoogleSignUp = async () => {
     try {
+
+      await signOut(auth);
       const res = await signInWithPopup(auth, googleProvider);
       const user = res.user;
 
       const idToken = await user.getIdToken(); // 🔐 Get secure Firebase token
 
-      // Send token to Django backend
-      const response = await fetch("http://localhost:8000/auth/api/google-login/", {
+     
+      // https://kleistic-backend.onrender.com/kleistic/google-login/
+      const response = await fetch("https://kleistic-backend.onrender.com/kleistic/google-login/", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -98,9 +102,14 @@ const Register = () => {
       navigate("/");
 
     } catch (error) {
-      console.error("Google Sign-In Error", error);
+       if (error.code === 'auth/popup-closed-by-user') {
+    console.warn("User closed the popup without completing sign-in.");
+  } else {
+    console.error("Google Sign-In Error:", error.message);
+  }
     }
   };
+
 
   return (
     <>
