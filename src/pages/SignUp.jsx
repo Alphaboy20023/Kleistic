@@ -1,5 +1,4 @@
-
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import Navbar from "../components/Navbar";
 import Footer from "../components/Footer";
 import { FcGoogle } from "react-icons/fc";
@@ -7,13 +6,10 @@ import { useDispatch, useSelector } from 'react-redux';
 import { register, resetAuth } from "../redux/authSlice";
 import { useState, useEffect, useCallback } from "react";
 import { ImSpinner2 } from "react-icons/im";
-import { useNavigate } from "react-router-dom";
 import { FiEye } from "react-icons/fi";
 import { IoMdEyeOff } from "react-icons/io";
-import { toast } from 'react-toastify';
 import { auth, googleProvider } from "../firebase";
-import { signInWithPopup } from "firebase/auth";
-import { signOut } from "firebase/auth";
+import { signInWithPopup, signOut } from "firebase/auth";
 
 const Register = () => {
   const [formData, setFormData] = useState({
@@ -35,8 +31,12 @@ const Register = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
+  // Clear stale auth status
   useEffect(() => {
-    dispatch(resetAuth());
+    const timer = setTimeout(() => {
+      dispatch(resetAuth());
+    }, 100); // prevent race condition
+    return () => clearTimeout(timer);
   }, [dispatch]);
 
   const handleRegister = useCallback(() => {
@@ -46,10 +46,10 @@ const Register = () => {
 
   useEffect(() => {
     let timer;
+    const justSignedUp = localStorage.getItem("justSignedUp");
 
-    if (status === 'succeeded' && data?.user) {
+    if (status === 'succeeded' && data?.user && justSignedUp) {
       setShowAlert(true);
-      toast.success(`🎉 Welcome to Kleistic, ${data.user.username}!`, { autoClose: 3000 });
       timer = setTimeout(() => {
         setShowAlert(false);
         navigate("/login");
@@ -73,43 +73,33 @@ const Register = () => {
     setFocused(prev => ({ ...prev, [field]: value }));
   };
 
-
   const handleGoogleSignUp = async () => {
     try {
-
       await signOut(auth);
       const res = await signInWithPopup(auth, googleProvider);
       const user = res.user;
+      const idToken = await user.getIdToken();
 
-      const idToken = await user.getIdToken(); // 🔐 Get secure Firebase token
-
-     
-      // https://kleistic-backend.onrender.com/kleistic/google-login/
-      const response = await fetch("https://kleistic-backend.onrender.com/kleistic/google-login/", {
+      const response = await fetch("https://web-production-6999.up.railway.app/kleistic/google-login/", {
         method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
+        headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ token: idToken }),
       });
 
       if (!response.ok) throw new Error("Backend rejected token");
 
       const data = await response.json();
-      
-      localStorage.setItem("access_token", data.tokens.access); 
-
+      localStorage.setItem("access_token", data.tokens.access);
       navigate("/");
 
     } catch (error) {
-       if (error.code === 'auth/popup-closed-by-user') {
-    console.warn("User closed the popup without completing sign-in.");
-  } else {
-    console.error("Google Sign-In Error:", error.message);
-  }
+      if (error.code === 'auth/popup-closed-by-user') {
+        console.warn("User closed the popup without completing sign-in.");
+      } else {
+        console.error("Google Sign-In Error:", error.message);
+      }
     }
   };
-
 
   return (
     <>
@@ -123,22 +113,28 @@ const Register = () => {
           <div className="relative gap-6 flex flex-col w-full justify-center py-[40px] px-[45px]">
             {showAlert && status === "succeeded" && data?.user && (
               <div className="absolute p-2 top-9 left-[19vh] -translate-x-1/3 lg:fixed lg:top-40 lg:left-auto lg:right-10 lg:translate-x-0 z-50 w-fit bg-green-100 border border-green-400 text-green-700 px-1 lg:px-3 lg:py-2 rounded shadow-lg text-sm sm:text-base">
-                <span>🎉 Registration successful! Redirecting to Login</span>
+                🎉 Registration successful! Redirecting to Login
                 <span className="dot-animated inline-block"><span>.</span><span>.</span><span>.</span></span>
               </div>
             )}
 
             {showAlert && error && (
               <div className="absolute p-2 top-9 left-[19vh] -translate-x-1/3 lg:fixed lg:top-40 lg:left-auto lg:right-10 lg:translate-x-0 z-50 w-fit bg-red-100 border border-red-700 text-red-700 px-1 lg:px-3 lg:py-2 rounded shadow-lg text-sm sm:text-base">
-                {typeof error === "object" ? (
+                {typeof error === "object" && error !== null ? (
                   <ul>
-                    {Object.entries(error).flatMap(([field, errors]) =>
-                      errors.map((err, i) => <li key={field + i}>{field}: {err}</li>)
-                    )}
+                    {Object.entries(error).flatMap(([field, errValue]) => {
+                      if (Array.isArray(errValue)) {
+                        return errValue.map((err, i) => <li key={field + i}>{field}: {err}</li>);
+                      } else {
+                        return <li key={field}>{field}: {errValue}</li>;
+                      }
+                    })}
                   </ul>
-                ) : error}
+                ) : (
+                  <span>{error?.toString()}</span>
+                )}
               </div>
-            )}
+            )}  
 
             <h1 className="text-4xl font-semibold my-3">Create Account</h1>
             <p>Enter Your details below</p>
@@ -211,9 +207,3 @@ const Register = () => {
 };
 
 export default Register;
-
-
-
-
-
-

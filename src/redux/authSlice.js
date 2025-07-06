@@ -2,7 +2,7 @@ import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import axios from "axios";
 
 const api = axios.create({
-  baseURL: "https://kleistic-backend.onrender.com/kleistic/",
+  baseURL: "https://web-production-6999.up.railway.app/kleistic/",
   headers: {
     "Content-Type": "application/json",
     "Accept": "application/json",
