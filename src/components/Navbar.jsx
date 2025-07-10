@@ -62,7 +62,7 @@ const Navbar = () => {
   const itemCount = cartItems.reduce((acc, item) => acc + item.quantity, 0);
 
   const auth = useSelector(state => state.auth.data);
-  const username = auth?.user?.username;
+  const user = auth?.user
   const isAuthenticated = !!auth?.tokens?.access;
 
   return (
@@ -133,10 +133,10 @@ const Navbar = () => {
                   <MdAccountCircle />
                 </button>
                 {openAccountDropdown && (
-                  <div className="absolute right-0 w-[26vh] mt-2 bg-white p-3 space-y-1 text-black rounded bg-blur bg-gray-300 shadow-lg z-30">
+                  <div className="absolute right-0 w-[30vh] mt-2 bg-white p-3 space-y-1 text-black rounded bg-blur bg-gray-300 shadow-lg z-30">
                     <div className="w-full space-y-1">
-                      {isAuthenticated && username && (
-                        <p className="block text-blue-700 font-semibold text-[18px]">Hello, {username}</p>
+                      {isAuthenticated && user && (
+                        <p className="block text-blue-700 font-semibold text-[15px]">Hello, {user.username || user.name}</p>
                       )}
                       <Link to="#" className="block hover:bg-gray-100">Manage My Account</Link>
                       <Link to="#" className="block hover:bg-gray-100">My Orders</Link>

@@ -1,8 +1,10 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import axios from "axios";
+import { auth, googleProvider } from "../firebase";
+import { signInWithPopup } from "firebase/auth";
 
 const api = axios.create({
-  baseURL: "https://web-production-6999.up.railway.app/kleistic/",
+  baseURL: "https://kleistic-v2.onrender.com/auth/",
   headers: {
     "Content-Type": "application/json",
     "Accept": "application/json",
@@ -26,6 +28,30 @@ export const logIn = createAsyncThunk('auth/login', async ({ username, password 
     return thunkAPI.rejectWithValue(error.response?.data?.detail || 'Login failed')
   }
 });
+
+export const googleLogin = createAsyncThunk('auth/googleLogin', async (_, thunkAPI) => {
+  try {
+    const result = await signInWithPopup(auth, googleProvider);
+    const idToken = await result.user.getIdToken();
+
+    const response = await api.post('google-login/', {
+      token: idToken
+    });
+
+    const { user, tokens } = response.data;
+
+    localStorage.setItem("kleistic_user", JSON.stringify(user));
+    localStorage.setItem("access_token", tokens.access);
+    localStorage.setItem("refresh_token", tokens.refresh);
+
+    axios.defaults.headers.common["Authorization"] = `Bearer ${tokens.access}`;
+
+    return response.data;
+  } catch (error) {
+    return thunkAPI.rejectWithValue(error.response?.data || 'Google login failed');
+  }
+});
+
 
 
 export const register = createAsyncThunk('auth/register', async (userData, thunkAPI) => {
@@ -98,6 +124,22 @@ const authSlice = createSlice({
       .addCase(register.rejected, (state, action) => {
         state.status = 'failed';
         state.error = action.payload || action.error.message;
+      })
+
+      .addCase(googleLogin.pending, (state) => {
+        state.status = 'loading';
+        state.error = '';
+      })
+
+      .addCase(googleLogin.fulfilled, (state, action) => {
+        state.status = 'succeeded';
+        state.data = action.payload;
+        state.error = '';
+      })
+
+      .addCase(googleLogin.rejected, (state, action) => {
+        state.status = 'failed';
+        state.error = action.payload || action.error.message
       });
 
   }
@@ -106,57 +148,3 @@ const authSlice = createSlice({
 export const { logout, resetAuth } = authSlice.actions;
 export default authSlice.reducer;
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-// src/api/axiosWithRefresh.js
-// import axios from "axios";
-// import api from "./axios"; // reuse your base Axios instance
-
-// const axiosWithRefresh = axios.create();
-
-// axiosWithRefresh.interceptors.response.use(
-//   response => response,
-//   async error => {
-//     const originalRequest = error.config;
-
-//     if (error.response.status === 401 && !originalRequest._retry) {
-//       originalRequest._retry = true;
-
-//       const refresh = localStorage.getItem("refresh");
-//       if (!refresh) return Promise.reject(error);
-
-//       try {
-//         const res = await api.post("/token/refresh/", { refresh });
-//         localStorage.setItem("access", res.data.access);
-//         api.defaults.headers["Authorization"] = `Bearer ${res.data.access}`;
-//         originalRequest.headers["Authorization"] = `Bearer ${res.data.access}`;
-//         return api(originalRequest);
-//       } catch (err) {
-//         console.error("Token refresh failed", err);
-//         return Promise.reject(err);
-//       }
-//     }
-
-//     return Promise.reject(error);
-//   }
-// );
-
-// export default axiosWithRefresh;

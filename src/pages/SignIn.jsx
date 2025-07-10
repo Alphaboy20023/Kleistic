@@ -96,7 +96,7 @@ const Login = () => {
 
                         {showAlert && status === "succeeded" && data?.user && (
                             <div className="p-1">
-                                <div className="fixed top-40 right-7 z-50 w-fit bg-red-100 border border-red-700 text-red-700 px-3 py-2 rounded shadow-lg text-sm sm:text-base transition-all duration-300 ease-in-out">
+                                <div className="fixed font-bold top-40 right-7 z-50 w-fit bg-green-100 border border-2 border-red-700 text-green-700 font-semibold px-3 py-2 rounded shadow-lg text-sm sm:text-base transition-all duration-300 ease-in-out">
                                     <span className="text-bold">Login successful!. Redirecting to home page</span>
                                     <span className="dot-animated inline-block">
                                         <span>.</span><span>.</span><span>.</span>
@@ -106,7 +106,7 @@ const Login = () => {
                         )}
 
                         {showAlert && error && typeof error === "object" ? (
-                            <div className="fixed top-40 right-7 z-50 w-fit bg-red-100 border border-red-700 text-red-700 px-3 py-2 rounded shadow-lg text-sm sm:text-base transition-all duration-300 ease-in-out">
+                            <div className="fixed font-bold top-40 right-7 z-50 w-fit bg-red-100 border border-2 border-red-700 text-red-700 px-3 py-2 rounded shadow-lg text-sm sm:text-base transition-all duration-300 ease-in-out">
                                 <ul>
                                     {Object.entries(error).map(([field, errors]) =>
                                         errors.map((err, i) => (
@@ -118,7 +118,7 @@ const Login = () => {
                                 </ul>
                             </div>
                         ) : showAlert && error ? (
-                            <div className="fixed top-40 right-7 z-50 w-fit bg-red-100 border border-red-700 text-red-700 px-3 py-2 rounded shadow-lg text-sm sm:text-base transition-all duration-300 ease-in-out">
+                            <div className="fixed font-bold top-40 right-7 z-50 w-fit bg-red-100 border border-2 border-red-700 text-red-700 px-3 py-2 rounded shadow-lg text-sm sm:text-base transition-all duration-300 ease-in-out">
                                 <div>
                                     {error}!
                                 </div>

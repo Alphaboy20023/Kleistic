@@ -3,15 +3,15 @@ import Navbar from "../components/Navbar";
 import Footer from "../components/Footer";
 import { FcGoogle } from "react-icons/fc";
 import { useDispatch, useSelector } from 'react-redux';
-import { register, resetAuth } from "../redux/authSlice";
+import { googleLogin, register, resetAuth } from "../redux/authSlice";
 import { useState, useEffect, useCallback } from "react";
 import { ImSpinner2 } from "react-icons/im";
 import { FiEye } from "react-icons/fi";
 import { IoMdEyeOff } from "react-icons/io";
-import { auth, googleProvider } from "../firebase";
-import { signInWithPopup, signOut } from "firebase/auth";
+
 
 const Register = () => {
+
   const [formData, setFormData] = useState({
     username: '',
     email: '',
@@ -28,21 +28,21 @@ const Register = () => {
   const [showAlert, setShowAlert] = useState(true);
 
   const { status, error, data } = useSelector(state => state.auth);
+  // const [user, setUser] = useState(null);
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
-  // Clear stale auth status
+
   useEffect(() => {
     const timer = setTimeout(() => {
       dispatch(resetAuth());
-    }, 100); // prevent race condition
+
+    }, 100);
+
     return () => clearTimeout(timer);
   }, [dispatch]);
 
-  const handleRegister = useCallback(() => {
-    dispatch(register(formData));
-    localStorage.setItem("justSignedUp", "true");
-  }, [dispatch, formData]);
+
 
   useEffect(() => {
     let timer;
@@ -52,7 +52,14 @@ const Register = () => {
       setShowAlert(true);
       timer = setTimeout(() => {
         setShowAlert(false);
-        navigate("/login");
+
+        if (data?.tokens) {
+
+          navigate('/')
+        } else {
+
+          navigate("/login");
+        }
         localStorage.removeItem("justSignedUp");
       }, 4000);
     }
@@ -73,33 +80,21 @@ const Register = () => {
     setFocused(prev => ({ ...prev, [field]: value }));
   };
 
+
   const handleGoogleSignUp = async () => {
-    try {
-      await signOut(auth);
-      const res = await signInWithPopup(auth, googleProvider);
-      const user = res.user;
-      const idToken = await user.getIdToken();
-
-      const response = await fetch("https://web-production-6999.up.railway.app/kleistic/google-login/", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ token: idToken }),
-      });
-
-      if (!response.ok) throw new Error("Backend rejected token");
-
-      const data = await response.json();
-      localStorage.setItem("access_token", data.tokens.access);
-      navigate("/");
-
-    } catch (error) {
-      if (error.code === 'auth/popup-closed-by-user') {
-        console.warn("User closed the popup without completing sign-in.");
-      } else {
-        console.error("Google Sign-In Error:", error.message);
-      }
-    }
+    dispatch(googleLogin());
+    localStorage.setItem('justSignedUp', 'true')
   };
+
+
+
+  const handleRegister = useCallback(() => {
+    dispatch(register(formData));
+
+    localStorage.setItem("justSignedUp", "true");
+  }, [dispatch, formData]);
+
+
 
   return (
     <>
@@ -112,14 +107,14 @@ const Register = () => {
 
           <div className="relative gap-6 flex flex-col w-full justify-center py-[40px] px-[45px]">
             {showAlert && status === "succeeded" && data?.user && (
-              <div className="absolute p-2 top-9 left-[19vh] -translate-x-1/3 lg:fixed lg:top-40 lg:left-auto lg:right-10 lg:translate-x-0 z-50 w-fit bg-green-100 border border-green-400 text-green-700 px-1 lg:px-3 lg:py-2 rounded shadow-lg text-sm sm:text-base">
-                🎉 Registration successful! Redirecting to Login
+              <div className="absolute p-2 top-9 left-[19vh] font-bold -translate-x-1/3 lg:fixed lg:top-40 lg:left-auto lg:right-10 lg:translate-x-0 z-50 w-fit bg-green-100 border border-2 border-green-400 text-green-700 px-1 lg:px-3 lg:py-2 rounded shadow-lg text-sm sm:text-base">
+                🎉 Registration successful!, Welcome to Kleistic
                 <span className="dot-animated inline-block"><span>.</span><span>.</span><span>.</span></span>
               </div>
             )}
 
             {showAlert && error && (
-              <div className="absolute p-2 top-9 left-[19vh] -translate-x-1/3 lg:fixed lg:top-40 lg:left-auto lg:right-10 lg:translate-x-0 z-50 w-fit bg-red-100 border border-red-700 text-red-700 px-1 lg:px-3 lg:py-2 rounded shadow-lg text-sm sm:text-base">
+              <div className="font-bold absolute p-2 top-9 left-[19vh] -translate-x-1/3 lg:fixed lg:top-40 lg:left-auto lg:right-10 lg:translate-x-0 z-50 w-fit bg-red-100 border border-2 border-red-700 text-red-700 px-1 lg:px-3 lg:py-2 rounded shadow-lg text-sm sm:text-base">
                 {typeof error === "object" && error !== null ? (
                   <ul>
                     {Object.entries(error).flatMap(([field, errValue]) => {
@@ -134,7 +129,7 @@ const Register = () => {
                   <span>{error?.toString()}</span>
                 )}
               </div>
-            )}  
+            )}
 
             <h1 className="text-4xl font-semibold my-3">Create Account</h1>
             <p>Enter Your details below</p>
@@ -191,7 +186,7 @@ const Register = () => {
               className="flex items-center justify-center gap-3 px-4 py-2 border-2 border-gray-300 rounded-md bg-white text-black hover:shadow-md transition duration-200 w-full max-w-xs mx-auto"
             >
               <FcGoogle className="text-2xl" />
-              <span className="text-base sm:text-lg font-medium">Sign up with Google</span>
+              <span className="text-base sm:text-lg font-medium">Continue with Google</span>
             </button>
 
             <div className="flex justify-center">
