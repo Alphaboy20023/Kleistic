@@ -4,7 +4,7 @@ import './index.css';
 import App from './App';
 import 'boxicons/css/boxicons.min.css'
 import { Provider } from 'react-redux';
-import store from './store'
+import store from './store/store';
 import { BrowserRouter } from "react-router-dom";
 // import { SearchProvider } from "./context/SearchContext";
 

@@ -5,7 +5,9 @@ import { RiCustomerServiceFill } from "react-icons/ri";
 import { MdOutlineVerifiedUser } from "react-icons/md";
 import { GiFamilyHouse } from "react-icons/gi";
 import { BiDollarCircle } from "react-icons/bi";
-
+import AboutCarousel from "../components/AboutCarousel";
+import { FaSackDollar } from "react-icons/fa6";
+import { GiShoppingBag } from "react-icons/gi";
 
 const About = () => {
     return (
@@ -42,41 +44,21 @@ const About = () => {
                     <p className="font-semibold">Monthly product Sale</p>
                 </div>
                 <div className="border flex border-gray-200 shadow-lg flex justify-center items-center flex-col p-5">
-                    logo
+                    <div className="rounded-full bg-gray-300 p-4">
+                        <GiShoppingBag className="text-4xl"/>
+                    </div>
                     <p className="font-bold text-2xl">35.5k</p>
                     <p className="font-semibold">Customer active on our site</p>
                 </div>
                 <div className="border flex border-gray-200 shadow-lg flex justify-center items-center flex-col p-5">
-                    logo
+                    <div className="rounded-full bg-gray-300 p-4">
+                        <FaSackDollar className="text-4xl" />
+                    </div>
                     <p className="font-bold text-xl">40k</p>
                     <p className="font-semibold">Annual gross sale</p>
                 </div>
             </div>
-
-            <section className="flex  justify-center gap-9 py-7 flex-wrap  flex">
-                <aside className="">
-                    <img src="" alt="founder" className="bg-gray-100 h-full" />
-                    <h1>Tom Stevens</h1>
-                    <p>Founder & Chairman</p>
-                    <p>icons</p>
-                </aside>
-                <aside className="h-40">
-                    <img src="" alt="managing_director" className="bg-gray-100 h-full" />
-                    <h1>Dayo Akinbunmi</h1>
-                    <p>Managing Director</p>
-                    <p>icons</p>
-                </aside>
-                <aside className=" h-40">
-                    <img src="" alt="designer" className="bg-gray-100 h-full" />
-                    <h1>Brazil Akinbunmi</h1>
-                    <p>Product Designer</p>
-                    <p>icons</p>
-                </aside>
-            </section>
-            <div className="flex justify-center py-12">
-                <p>...........</p>
-            </div>
-
+            <AboutCarousel />
             <div className="flex justify-center pt-5">
                 <div className="flex flex-col items-center m-4">
                     <div className="rounded-full bg-gray-200 p-4">

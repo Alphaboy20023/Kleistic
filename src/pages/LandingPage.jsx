@@ -31,9 +31,7 @@ const LandingPage = () => {
     <>
       <Navbar />
 
-      {/* Hero Section */}
       <main className="pt-[120px] lg:pt-[95px]">
-
         <div className="py-7 flex flex-col sm:flex-row gap-8 sm:pl-4 sm:py-4 lg:mt-5 max-w-[1400px] mx-auto">
           <aside className="ml-8 flex flex-col border-r-0 sm:border-r-2 px-6">
             {[
@@ -59,7 +57,7 @@ const LandingPage = () => {
 
             <div className="flex items-center gap-8 flex-wrap">
               <p className="font-bold text-3xl">Flash Sales</p>
-              <CountdownTimer targetDate="2025-07-01T00:00:00" />
+              <CountdownTimer targetDate="2026-01-01T00:00:00" />
 
               <div className="flex items-center gap-2 ml-auto">
                 <button ref={prevRef}>
@@ -100,7 +98,7 @@ const LandingPage = () => {
             <div className=" w-full sm:w-1/2 p-6">
               <p className="text-green-400 text-xl font-semibold">Categories</p>
               <h2 className="text-2xl sm:text-5xl my-6 text-white">Enhance Your Music Experience</h2>
-              <CountTimer targetedDate="2025-07-22T23:59:35" />
+              <CountTimer targetedDate="2026-01-22T23:59:35" />
               <Link>
                 <div className="p-3 bg-green-600 w-1/2 mt-5 text-center">
                   <p className="text-white text-xl">Buy Now</p>
