@@ -54,11 +54,6 @@ const AboutCarousel = () => {
     }, [totalSlides]);
 
 
-    const getCurrentCards = () => {
-        const startIndex = currentIndex * 3;
-        return teamMembers.slice(startIndex, startIndex + 3);
-    };
-
     return (
         <div className="w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div className="overflow-hidden">
