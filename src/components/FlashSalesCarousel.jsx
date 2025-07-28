@@ -9,16 +9,13 @@ import { useDispatch } from "react-redux";
 import { addToCart } from "../redux/cartSlice";
 import defaultProducts from "../data/product";
 
-
 const FlashSalesCarousel = forwardRef(({ products, nextEl, prevEl }, ref) => {
     const swiperRef = useRef();
-
     const dispatch = useDispatch();
 
     const handleAddToCart = (product) => {
         dispatch(addToCart(product))
     }
-
 
     const filteredProducts = defaultProducts.filter(p => p.category === 'Flash Sales');
     const items = filteredProducts.length ? filteredProducts : [];
@@ -33,91 +30,120 @@ const FlashSalesCarousel = forwardRef(({ products, nextEl, prevEl }, ref) => {
     }, [nextEl, prevEl]);
 
     return (
-        <>
-            <Swiper
-                modules={[Navigation]}
-                spaceBetween={16}
-                slidesPerView={1}
-                onSwiper={(swiper) => (swiperRef.current = swiper)}
-                breakpoints={{
-                    640: { slidesPerView: 2 },
-                    1024: { slidesPerView: 4 },
-                }}
-            >
-                {items.map((product) => (
-                    <SwiperSlide key={product.id}>
-                        <div className="bg-purple-100 py-11 px-8 h-[280px] relative">
-                            <div className="absolute top-3 left-4 bg-red-700 text-white text-[14px] text-center rounded-[4px] w-[50px] h-[24px]">
-                                {product.discount}
+        <Swiper
+            modules={[Navigation]}
+            spaceBetween={16}
+            slidesPerView={1}
+            onSwiper={(swiper) => (swiperRef.current = swiper)}
+            breakpoints={{
+                640: { slidesPerView: 2 },
+                1024: { slidesPerView: 4 },
+            }}
+        >
+            {items.map((product) => (
+                <SwiperSlide key={product.id}>
+                    <div className="mt-5 group bg-white rounded-lg shadow-sm hover:shadow-md transition-all duration-300 cursor-pointer overflow-hidden">
+                        {/* Product Image Container with Button */}
+                        <div className="bg-purple-100 relative flex flex-col h-[290px]">
+                            {/* Top Section - Badges and Icons */}
+                            <div className="relative flex-shrink-0">
+                                {/* Discount Badge */}
+                                <div className="absolute top-3 left-4 bg-red-700 text-white text-xs font-medium text-center rounded px-2 py-1 z-10">
+                                    {product.discount}
+                                </div>
+
+                                <Link to="#wishlist" onClick={(e) => e.stopPropagation()}>
+                                    <div className="absolute top-4 right-3 bg-white w-9 h-9 rounded-full flex items-center justify-center z-10 hover:bg-gray-50 transition-colors">
+                                        <i className="bx bx-heart text-lg text-gray-700"></i>
+                                    </div>
+                                </Link>
+
+                                {/* View Product Button */}
+                                <Link to={`/product_detail/${product.id}`} onClick={(e) => e.stopPropagation()}>
+                                    <div className="absolute top-16 right-3 bg-white w-9 h-9 rounded-full flex items-center justify-center z-10 hover:bg-gray-50 transition-colors">
+                                        <LuEye style={{
+                                            stroke: 'black',
+                                            fill: 'white',
+                                            strokeWidth: 2,
+                                            width: '18px',
+                                            height: '18px'
+                                        }} />
+                                    </div>
+                                </Link>
                             </div>
 
-                            <Link to="#wishlist">
-                                <div className=" absolute top-4 right-3 bg-white w-9 h-9 rounded-full flex items-center justify-center z-10">
-                                    <i className="bx bx-heart text-[20px] text-gray-700"></i>
-                                </div>
-                            </Link>
+                            {/* Middle Section - Product Image */}
+                            <div className="flex-1 flex items-center justify-center p-4">
+                                <img
+                                    src={product.image}
+                                    alt={product.title}
+                                    className="max-h-[140px] max-w-full object-contain group-hover:scale-105 transition-transform duration-300"
+                                />
+                            </div>
 
-
-                            <Link to={`/product_detail/${product.id}`}>
-                                <div className="rounded-full bg-white w-9 h-9 flex items-center justify-center absolute top-[65px] right-3">
-                                    <LuEye style={{
-                                        stroke: 'black',
-                                        fill: 'white',
-                                        strokeWidth: 2,
-                                        width: '20px',
-                                        height: '20px'
-                                    }} />
-                                </div>
-                            </Link>
-                            <div className="p-4 flex flex-col items-center">
-                                <img src={product.image} alt={product.title} className="h-[160px] mx-auto" />
+                            <div className=" pb-1 flex-shrink-0">
+                                <button
+                                    onClick={(e) => {
+                                        e.stopPropagation();
+                                        handleAddToCart(product);
+                                    }}
+                                    className="w-full bg-black hover:bg-gray-800 text-white py-3 px-4 rounded-md font-medium text-sm transition-all duration-200 transform group-hover:scale-105"
+                                >
+                                    Add to Cart
+                                </button>
                             </div>
                         </div>
+                    </div>
+                    {/* Product Details Container */}
+                    <div className="p-3 space-y-1 shadow-none">
+                        <h4 className="text-gray-900 font-semibold text-md leading-5 line-clamp-2 min-h-[1.3rem] group-hover:text-black transition-colors">
+                            {product.title}
+                        </h4>
 
-                        <div className="mt-2">
-                            <h4 className="text-black font-semibold">{product.title}</h4>
-                            <div className="flex gap-3">
-                                <p className="text-red-500">${product.price}</p>
-                                <p className="text-gray-500 line-through">${product.oldPrice}</p>
-                            </div>
-
-                            <div className="flex items-center gap-2">
-                                <div className="flex">
-                                    {Array.from({ length: 5 }, (_, i) => {
-                                        const fullStars = Math.floor(product.rating);
-                                        const hasHalfStar = product.rating % 1 !== 0;
-
-                                        if (i < fullStars) {
-                                            return <i key={i} className="bx bxs-star text-yellow-400 text-sm" ></i>;
-                                        } else if (i === fullStars && hasHalfStar) {
-                                            return (
-                                                <i
-                                                    key={i}
-                                                    className="bx bxs-star-half text-sm"
-                                                    style={{ color: "yellow", background: "linear-gradient(to right, #facc15 50%,  #9CA3AF 50%)", WebkitBackgroundClip: "text", WebkitTextFillColor: "transparent" }}
-                                                >
-                                                </i>
-                                            );
-                                        } else {
-                                            return <i key={i} className="bx bxs-star text-gray-400 text-sm" ></i>
-                                        }
-                                    })}
-                                </div>
-                                <p className="text-sm text-gray-600">({product.reviews})</p>
-                            </div>
-                            <button onClick={() => handleAddToCart(product)} className="w-full flex justify-center relative bottom-[125px] cursor-pointer">
-                                <div className="w-full bg-black text-white rounded flex items-center justify-center">
-                                    <p className="p-3">Add to Cart</p>
-                                </div>
-                            </button>
-
+                        {/* Price Section */}
+                        <div className="flex items-center gap-3">
+                            <span className="text-red-500 font-bold text-base">
+                                ${product.price}
+                            </span>
+                            <span className="text-gray-500 line-through text-sm">
+                                ${product.oldPrice}
+                            </span>
                         </div>
-                    </SwiperSlide>
-                ))}
-            </Swiper>
 
-        </>
+                        {/* Rating Section */}
+                        <div className="flex items-center gap-2">
+                            <div className="flex items-center">
+                                {Array.from({ length: 5 }, (_, i) => {
+                                    const fullStars = Math.floor(product.rating);
+                                    const hasHalfStar = product.rating % 1 !== 0;
 
+                                    if (i < fullStars) {
+                                        return <i key={i} className="bx bxs-star text-yellow-400 text-sm"></i>;
+                                    } else if (i === fullStars && hasHalfStar) {
+                                        return (
+                                            <i
+                                                key={i}
+                                                className="bx bxs-star-half text-sm"
+                                                style={{
+                                                    color: "yellow",
+                                                    background: "linear-gradient(to right, #facc15 50%, #9CA3AB 50%)",
+                                                    WebkitBackgroundClip: "text",
+                                                    WebkitTextFillColor: "transparent"
+                                                }}
+                                            />
+                                        );
+                                    } else {
+                                        return <i key={i} className="bx bxs-star text-gray-400 text-sm"></i>;
+                                    }
+                                })}
+                            </div>
+                            <span className="text-xs text-gray-600">({product.reviews})</span>
+                        </div>
+                    </div>
+
+                </SwiperSlide>
+            ))}
+        </Swiper>
     );
 });
 

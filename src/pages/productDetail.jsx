@@ -60,10 +60,13 @@ const ProductDetail = () => {
     return (
         <>
             <Navbar />
-            <div className="p-5 flex justify-center pt-[180px] lg:pt-[140px] ">
-                <div className="flex px-3 lg:px-7 gap-5 flex-wrap lg:flex-nowrap">
-                    <div className="flex gap-4 w-full justify-center">
-                        <div className="flex flex-col space-y-3 max-w-[10.5vw] sm:w-[20vw] md:w-[33.333vw] lg:max-h-[24vh]">
+            <div className="p-5 pt-[180px] lg:pt-[140px] ">
+                <div className="flex px-3  gap-5 flex-wrap lg:flex-nowrap">
+                    <div className="flex flex-col gap-4 w-full justify-center">
+                        <div className=" flex lg:ml-auto ml-auto mr-auto max-w-full  sm:w-[45vw] md:w-[45vw] lg:w-[55vh]">
+                            <img src={product.image} alt={product.title} className="w-full object-cover" />
+                        </div>
+                        <div className="flex flex-row space-x-3 w-[18vw] sm:w-[20vw] md:w-[33.333vw] lg:max-h-[24vh] items-center mr-auto">
                             {[...Array(3)].map((_, i) => (
                                 <img
                                     key={i}
@@ -73,12 +76,7 @@ const ProductDetail = () => {
                                 />
                             ))}
                         </div>
-                        <div className="max-w-full  sm:w-[20vw] md:w-[33.333vw] lg:max-w-1/2">
-                            <img src={product.image} alt={product.title} className="w-full object-cover" />
-                        </div>
                     </div>
-
-
                     <div className="flex flex-col w-full gap-2">
                         <h4 className="font-semibold">{product.title}</h4>
                         <div className="flex">
@@ -157,7 +155,7 @@ const ProductDetail = () => {
                     <div className="h-[40px] w-[18px] rounded bg-orange-700" />
                     <h5 className="text-orange-700 font-bold">Related Items</h5>
                 </div>
-                    {/* relatedItems */}
+                {/* relatedItems */}
                 <div className="w-full overflow-x-auto scroll-smooth snap-x snap-mandatory no-scrollbar ">
                     <div className="flex w-max  ">
                         {relatedItems.map((relatedProduct) => (
