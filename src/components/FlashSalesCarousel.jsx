@@ -5,19 +5,22 @@ import { Navigation } from "swiper/modules";
 import "swiper/css";
 import "swiper/css/navigation";
 import { LuEye } from 'react-icons/lu';
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { addToCart } from "../redux/cartSlice";
-import defaultProducts from "../data/product";
+import { getProducts } from "../redux/productSlice";
 
-const FlashSalesCarousel = forwardRef(({ products, nextEl, prevEl }, ref) => {
+
+const FlashSalesCarousel = forwardRef(({ nextEl, prevEl }, ref) => {
     const swiperRef = useRef();
     const dispatch = useDispatch();
+    const { products, error, success } = useSelector((state) => state.products);
+
 
     const handleAddToCart = (product) => {
         dispatch(addToCart(product))
     }
 
-    const filteredProducts = defaultProducts.filter(p => p.category === 'Flash Sales');
+    const filteredProducts = products.filter(p => p.category === 'Flash Sales');
     const items = filteredProducts.length ? filteredProducts : [];
 
     useEffect(() => {
@@ -27,7 +30,10 @@ const FlashSalesCarousel = forwardRef(({ products, nextEl, prevEl }, ref) => {
             swiperRef.current.navigation.init();
             swiperRef.current.navigation.update();
         }
-    }, [nextEl, prevEl]);
+
+        dispatch(getProducts());
+    }, [nextEl, prevEl, dispatch]);
+
 
     return (
         <Swiper
@@ -49,7 +55,7 @@ const FlashSalesCarousel = forwardRef(({ products, nextEl, prevEl }, ref) => {
                             <div className="relative flex-shrink-0">
                                 {/* Discount Badge */}
                                 <div className="absolute top-3 left-4 bg-red-700 text-white text-xs font-medium text-center rounded px-2 py-1 z-10">
-                                    {product.discount}
+                                    {product.discount}%
                                 </div>
 
                                 <Link to="#wishlist" onClick={(e) => e.stopPropagation()}>
@@ -75,7 +81,7 @@ const FlashSalesCarousel = forwardRef(({ products, nextEl, prevEl }, ref) => {
                             {/* Middle Section - Product Image */}
                             <div className="flex-1 flex items-center justify-center p-4">
                                 <img
-                                    src={product.image}
+                                   src={product.image}
                                     alt={product.title}
                                     className="max-h-[140px] max-w-full object-contain group-hover:scale-105 transition-transform duration-300"
                                 />
@@ -103,13 +109,12 @@ const FlashSalesCarousel = forwardRef(({ products, nextEl, prevEl }, ref) => {
                         {/* Price Section */}
                         <div className="flex items-center gap-3">
                             <span className="text-red-500 font-bold text-base">
-                                ${product.price}
+                                ₦{product.price.toLocaleString()}
                             </span>
                             <span className="text-gray-500 line-through text-sm">
-                                ${product.oldPrice}
+                                ₦{product.oldPrice.toLocaleString()}
                             </span>
                         </div>
-
                         {/* Rating Section */}
                         <div className="flex items-center gap-2">
                             <div className="flex items-center">

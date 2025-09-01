@@ -7,7 +7,7 @@ const Contact = () => {
     return (
         <>
             <Navbar />
-            <div className="lg:pt-[150px] pt-[170px] h-full p-4 flex justify-center items-center gap-5 pb-5 flex-wrap lg:flex-nowrap">
+            <div className="h-full p-4 flex justify-center items-center gap-5 pb-5 flex-wrap lg:flex-nowrap">
                 <div className=" shadow-lg p-5 h-full space-y-5">
                     <h1 className="text-2xl font-semibold flex items-center gap-2"> <span><IoCallOutline className="text-orange-600 font-bold" /> </span> Call us</h1>
                     <p>We are available 24/7, 7 days a week.</p>

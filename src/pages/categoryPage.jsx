@@ -73,9 +73,9 @@ const CategoryPage = () => {
                                                 <p className="font-semibold flex text-sm text-start text-center">{product.title}</p>
                                             </Link>
                                             <div className="flex gap-2 items-center">
-                                                <span className="text-red-500 font-semibold">${product.price}</span>
+                                                <span className="text-red-500 font-semibold">₦{product.price}</span>
                                                 {product.oldPrice && (
-                                                    <span className="line-through text-gray-400 text-xs">${product.oldPrice}</span>
+                                                    <span className="line-through text-gray-400 text-xs">₦{product.oldPrice}</span>
                                                 )}
                                             </div>
                                             <div className="flex items-center gap-2">

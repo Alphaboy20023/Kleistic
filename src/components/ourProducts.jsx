@@ -1,10 +1,10 @@
 import { Link } from "react-router-dom";
 import { LuEye } from 'react-icons/lu';
-import defaultProducts from "../data/product";
+import { useSelector } from "react-redux";
 
 const OurProducts = () => {
-    
-    const items = defaultProducts.filter(p => p.category === 'Our Products')
+    const { products } = useSelector((state) => state.products);
+    const items = products.filter(p => p.category === 'Our Products')
 
     return (
         <>
@@ -48,7 +48,7 @@ const OurProducts = () => {
                                     <p className="font-semibold flex text-sm text-start text-center">{product.title}</p>
                                     </Link>
                                     <div className="flex gap-2 items-center">
-                                        <span className="text-red-500 font-semibold">${product.price}</span>
+                                        <span className="text-red-500 font-semibold">₦{product.price.toLocaleString()}</span>
                                         {/* {product.oldPrice && (
                                             <span className="line-through text-gray-400 text-xs">${product.oldPrice}</span>
                                         )} */}

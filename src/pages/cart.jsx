@@ -2,16 +2,18 @@ import Navbar from "../components/Navbar";
 import Footer from "../components/Footer";
 import { Link } from "react-router";
 import { useSelector, useDispatch } from "react-redux";
-import { removeFromCart, addToCart, decreaseQuantity } from "../redux/cartSlice";
-import defaultProducts from "../data/product";
+import { addToCart, decreaseQuantity, clearCart } from "../redux/cartSlice";
+
 
 const Cart = () => {
 
     const dispatch = useDispatch();
     const cartItems = useSelector(state => state.cart.items);
+    const { products, error, success } = useSelector((state) => state.products);
 
-    const handleRemove = (id) => {
-        dispatch(removeFromCart(id))
+
+    const handleClearCart = () => {
+        dispatch(clearCart())
     }
 
     const handleDecrease = (id) => {
@@ -22,21 +24,13 @@ const Cart = () => {
         dispatch(addToCart(item))
     }
 
-    const cartInfo = cartItems.map(cartItem => {
-        const product = defaultProducts.find(p => String(p.id) === String(cartItem.id));
-        if (!product || cartItem.quantity <= 0) return null;
-        return {
-            ...cartItem,
-            ...product,
-        };
-    }).filter(Boolean)
+    const cartInfo = cartItems.filter(item => item.quantity > 0);
 
     // console.log(cartInfo);
     const subtotal = cartItems.reduce((acc, item) => acc + item.price * item.quantity, 0.00)
     const shipping = subtotal > 200 ? 25 : 0;
 
     const total = subtotal + shipping
-
 
     return (
         <>
@@ -69,7 +63,7 @@ const Cart = () => {
                                             />
                                             <span>{item.title}</span>
                                         </td>
-                                        <td className="px-4 py-3">${item.price.toFixed(2)}</td>
+                                        <td className="px-4 py-3">₦{item.price.toLocaleString("en-NG", { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</td>
                                         <td className=" py-3">
                                             <div className="flex items-center ">
                                                 <button onClick={() => handleDecrease(item.id)} className="px-2 mr-3 border rounded">-</button>
@@ -84,9 +78,9 @@ const Cart = () => {
                                                 <button onClick={() => handleIncrease(item)} className="px-2 border rounded">+</button>
                                             </div>
                                         </td>
-                                        <td className="px-4 py-3">${(item.price * item.quantity).toFixed(2)}</td>
+                                        <td className="px-4 py-3">₦{(item.price * item.quantity).toLocaleString("en-NG", { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</td>
                                         <td className="px-4 py-3">
-                                            <button onClick={() => handleRemove(item.id)} className="text-red-600 font-bold">del</button>
+                                            <button onClick={() => handleDecrease(item.id)} className="text-red-600 font-bold">del</button>
                                         </td>
                                     </tr>
                                 ))
@@ -98,7 +92,7 @@ const Cart = () => {
                     <div className="flex flex-col mb-6 p-3">
                         <div className="flex justify-between">
                             <Link to="/" className="border-gray border p-2 border-shadow text-xl rounded hover:bg-orange-600 hover:text-white">Return to Shopping</Link>
-                            <Link to="#clearall" className="border-gray border p-2 rounded border-shadow text-xl hover:bg-orange-600 hover:text-white">Clear Cart</Link>
+                            <button onClick={() => handleClearCart()} className="border-gray border p-2 rounded border-shadow text-xl hover:bg-orange-600 hover:text-white">Clear Cart</button>
                         </div>
                     </div>
 
@@ -114,15 +108,15 @@ const Cart = () => {
                             <h2 className="font-bold text-2xl">Cart Total</h2>
                             <div className="font-semibold flex justify-between border-b border-gray-300 p-2">
                                 <p>Subtotal:</p>
-                                <p>${subtotal.toFixed(2)}</p>
+                                <p>₦{subtotal.toLocaleString("en-NG", { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</p>
                             </div>
                             <div className="font-semibold flex justify-between border-b border-gray-300 p-2">
                                 <p>Shipping:</p>
-                                <p>${shipping.toFixed(2)}</p>
+                                <p>₦{shipping.toFixed(2)}</p>
                             </div>
                             <div className="font-semibold flex justify-between border-b border-gray-300 p-2">
                                 <p>Total:</p>
-                                <p>${total.toFixed(2)}</p>
+                                <p>₦{total.toLocaleString("en-NG", { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</p>
                             </div>
                             <div className="mt-4 lg:w-1/2 flex justify-center ml-auto mr-auto">
                                 {cartInfo.length > 0 ? (

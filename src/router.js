@@ -10,6 +10,7 @@ import About from './pages/about';
 import Contact from './pages/contact';
 import CategoryPage from './pages/categoryPage';
 import AllProducts from './pages/allProduct';
+import Orders from './pages/orders';
 
 
 
@@ -22,6 +23,7 @@ const NavBarLinks = () => {
                 <Route path="/wishlist" element={<Wishlist />} />
                 <Route path="/cart" element={<Cart />} />
                 <Route path="/checkout" element={<Checkout />} />
+                <Route path="/order" element={<Orders />} />
                 <Route path="/about" element={<About />} />
                 <Route path="/contact" element={<Contact />} />
                 <Route path="/all_products/:categoryId" element={<AllProducts />} />

@@ -4,6 +4,7 @@ import { auth, googleProvider } from "../firebase";
 import { signInWithPopup } from "firebase/auth";
 
 const api = axios.create({
+  // localhost: http://127.0.0.1:8000/auth/ for dev
   baseURL: "https://kleistic-v2.onrender.com/auth/",
   headers: {
     "Content-Type": "application/json",
@@ -91,7 +92,13 @@ const authSlice = createSlice({
       state.status = "idle";
       state.error = "";
       state.data = null;
-    }
+    },
+    setToken: (state, action) => {
+      state.token = action.payload;
+    },
+    clearToken: (state) => {
+      state.token = null;
+    },
   },
 
   extraReducers: (builder) => {
@@ -145,6 +152,6 @@ const authSlice = createSlice({
   }
 });
 
-export const { logout, resetAuth } = authSlice.actions;
+export const { logout, resetAuth, setToken, clearToken } = authSlice.actions;
 export default authSlice.reducer;
 

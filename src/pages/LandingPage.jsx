@@ -8,10 +8,11 @@ import ThisMonth from "../components/ThisMonth";
 import Footer from "../components/Footer";
 import CountTimer from "../components/counter2";
 import OurProducts from "../components/ourProducts";
-import defaultProducts from "../data/product";
 import { FaTruckFast } from "react-icons/fa6";
 import { RiCustomerServiceFill } from "react-icons/ri";
 import { MdOutlineVerifiedUser } from "react-icons/md";
+
+
 // import SearchBtn from "../components/SearchButton";
 
 
@@ -19,20 +20,14 @@ import { MdOutlineVerifiedUser } from "react-icons/md";
 const LandingPage = () => {
   const nextRef = useRef(null);
   const prevRef = useRef(null);
-  // const { searchTerm } = useSearch();
-
-  // const filteredProducts = defaultProducts.filter((product) =>
-  //   product.title.toLowerCase().includes(searchTerm.toLowerCase()) );
-
-  const flashSales = defaultProducts.filter(p => p.category === "Flash Sales");
-
+  
 
   return (
     <>
       <Navbar />
 
-      <main className="pt-[120px] lg:pt-[95px]">
-        <div className="py-7 flex flex-col sm:flex-row gap-8 sm:pl-4 sm:py-4 lg:mt-5 max-w-[1400px] mx-auto">
+      <main>
+        <div className="flex flex-col sm:flex-row gap-8 sm:pl-4 sm:py-4 max-w-[1400px] mx-auto">
           <aside className="ml-8 flex flex-col border-r-0 sm:border-r-2 px-6">
             {[
               "Women's Fashion", "Men's Fashion", "Electronics", "Gaming",
@@ -69,7 +64,7 @@ const LandingPage = () => {
               </div>
             </div>
 
-            <FlashSalesCarousel nextEl={nextRef} prevEl={prevRef} products={flashSales} />
+            <FlashSalesCarousel nextEl={nextRef} prevEl={prevRef}/>
 
             <div className="flex justify-center p-4">
               <Link to="/all_products/Flash Sales" className="bg-orange-600 px-4 py-2 text-white">

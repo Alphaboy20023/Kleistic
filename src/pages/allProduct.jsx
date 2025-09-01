@@ -1,25 +1,33 @@
 import Navbar from "../components/Navbar";
 import Footer from "../components/Footer";
 import { useParams } from "react-router";
-import defaultProducts from "../data/product";
+import { useEffect } from "react";
 import { Link } from "react-router-dom";
 import { addToCart } from "../redux/cartSlice";
 import { LuEye } from 'react-icons/lu';
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import CountdownTimer from "../components/Countdown";
 import WithSpinner from "../components/WithSpinner";
+import { getProducts } from "../redux/productSlice";
 
 
 
 const AllProducts = () => {
     const { categoryId } = useParams();
     const dispatch = useDispatch();
+    const { products, error, success } = useSelector((state) => state.products);
+    
 
-    const handleAddToCart = (product) => {
-        dispatch(addToCart(product))
+    const handleAddToCart = (products) => {
+        dispatch(addToCart(products))
     }
 
-    const filteredProducts = defaultProducts.filter((product) => product.category === categoryId);
+    useEffect(() => {
+        dispatch(getProducts());
+    }, [dispatch]);
+
+    const filteredProducts = products.filter((product) => product.category === categoryId);
+    
 
     return (
         <>
@@ -84,8 +92,8 @@ const AllProducts = () => {
                                                 <div className="relative bottom-9">
                                                     <h4 className="text-black font-semibold">{product.title}</h4>
                                                     <div className="flex gap-3">
-                                                        <p className="text-red-500">${product.price}</p>
-                                                        <p className="text-gray-500 line-through">${product.oldPrice}</p>
+                                                        <p className="text-red-500">₦{product.price.toLocaleString()}</p>
+                                                        <p className="text-gray-500 line-through">₦{product.oldPrice.toLocaleString()}</p>
                                                     </div>
 
                                                     <div className="flex items-center gap-2">
@@ -150,9 +158,9 @@ const AllProducts = () => {
                                                         <p className="font-semibold flex text-sm text-start text-center">{product.title}</p>
                                                     </Link>
                                                     <div className="flex gap-2 items-center">
-                                                        <span className="text-red-500 font-semibold">${product.price}</span>
+                                                        <span className="text-red-500 font-semibold">${product.price.toLocaleString()}</span>
                                                         {product.oldPrice && (
-                                                            <span className="line-through text-gray-400 text-xs">${product.oldPrice}</span>
+                                                            <span className="line-through text-gray-400 text-xs">${product.oldPrice.toLocaleString()}</span>
                                                         )}
                                                     </div>
                                                     <div className="flex items-center gap-2">

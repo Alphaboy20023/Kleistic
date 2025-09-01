@@ -1,5 +1,5 @@
 import { useParams, Link } from "react-router-dom";
-import defaultProducts from "../data/product";
+// import defaultProducts from "../data/product";
 import Navbar from "../components/Navbar";
 import { useState } from "react";
 import { LuEye } from 'react-icons/lu';
@@ -7,25 +7,22 @@ import Footer from "../components/Footer";
 import { useDispatch, useSelector } from "react-redux";
 import { updateQuantity, addToCart } from "../redux/cartSlice";
 
-
-
-
 const ProductDetail = () => {
     const { id } = useParams();
-    const product = defaultProducts.find(p => p.id.toString() === id);
     const [selectedSize, setSelectedSize] = useState(null);
-    // const [count, setCount] = useState(1);
     const sizes = ['XS', 'S', 'M', 'L', 'XL']
     const dispatch = useDispatch();
     const cart = useSelector(state => state.cart.items);
+    const { products } = useSelector((state) => state.products);
 
-    const cartItem = cart.find(i => i.id === product.id);
+    const product = products.find(p => String(p.id) === id)
+
+
+    const cartItem = cart.find(i => i.id === products.id);
     const quantity = cartItem ? cartItem.quantity : 0;
 
 
     if (!product) return <div className="p-6">Product not found</div>
-
-
 
     const handleIncrease = () => {
         const cartItem = cart.find(i => i.id === product.id);
@@ -51,12 +48,7 @@ const ProductDetail = () => {
         }
     };
 
-    // console.log("Quantity in Redux:", quantity);
-
-    const relatedItems = defaultProducts.filter(p => p.mainCategory === product.mainCategory && p.id !== product.id);
-
-
-
+    const relatedItems = products.filter(p => p.mainCategory === product.mainCategory && p.id !== product.id);
     return (
         <>
             <Navbar />
@@ -86,7 +78,6 @@ const ProductDetail = () => {
                                     {Array.from({ length: 5 }, (_, i) => {
                                         const fullStars = Math.floor(product.rating);
                                         const hasHalfStar = product.rating % 1 !== 0;
-
                                         if (i < fullStars) {
                                             return <i key={i} className="bx bxs-star text-yellow-400 text-sm" ></i>;
                                         } else if (i === fullStars && hasHalfStar) {
@@ -106,7 +97,8 @@ const ProductDetail = () => {
                             </div>
                             <p className="text-green-400">| In Stock</p>
                         </div>
-                        <p className="text-red-500">${product.price}</p>
+                        <p className="text-red-500">₦{product.price.toLocaleString()}</p>
+                        {/* <p className="text-red-500">₦{product.OldPrice.toLocaleString()}</p> */}
                         <p>{product.description || "No descriptions available."}</p>
                         <div className="bg-black h-[0.5px] w-full my-3 "></div>
                         {/* <p>colors</p> */}
@@ -121,7 +113,6 @@ const ProductDetail = () => {
                                 ))}
                             </div>
                         </div>
-
 
                         <div className="flex gap-4">
                             <div className="flex items-center  justify-center gap-1">
@@ -148,7 +139,6 @@ const ProductDetail = () => {
                     </div>
                 </div>
             </div>
-
 
             <div className="px-9 flex flex-col gap-2 mt-6">
                 <div className="flex gap-3 items-center mb-4">

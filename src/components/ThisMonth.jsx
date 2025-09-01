@@ -1,12 +1,13 @@
 import { Link } from "react-router-dom";
 import { LuEye } from 'react-icons/lu';
-import defaultProducts from "../data/product";
+import { useSelector } from "react-redux";
 
 
 
 const ThisMonth = () => {
-
-    const items = defaultProducts.filter(p => p.category === 'This Month')
+    const { products } = useSelector((state) => state.products);
+    const items = products.filter(p => p.category === 'This Month')
+ 
 
     return (
         //  bg-gray-100    #f3f4f6 
@@ -51,10 +52,8 @@ const ThisMonth = () => {
                                     <p className="font-semibold flex text-sm text-start text-center">{product.title}</p>
                                     </Link>
                                     <div className="flex gap-2 items-center">
-                                        <span className="text-red-500 font-semibold">${product.price}</span>
-                                        {product.oldPrice && (
-                                            <span className="line-through text-gray-400 text-xs">${product.oldPrice}</span>
-                                        )}
+                                        <span className="text-red-500 font-bold">₦{product.price.toLocaleString()}</span>
+                                        
                                     </div>
                                     <div className="flex items-center gap-2">
                                         <div className="flex">

@@ -1,85 +1,70 @@
 import { createSlice } from "@reduxjs/toolkit";
 
-let cartFromStorage;
-try {
-    const stored = localStorage.getItem("cart");
-    cartFromStorage = stored && stored !== "undefined" ? JSON.parse(stored) : [];
-} catch (err) {
-    cartFromStorage = [];
-}
-
 const initialState = {
-    items: cartFromStorage,
+  items:
+    typeof window !== "undefined" && localStorage.getItem("cart")
+      ? JSON.parse(localStorage.getItem("cart"))
+      : []
 };
 
-
 const cartSlice = createSlice({
-    name: 'cart',
-    initialState,
+  name: "cart",
+  initialState,
+  reducers: {
+    addToCart: (state, action) => {
+      const item = action.payload;
+      const existing = state.items.find((i) => i.id === item.id === action.payload.id);
 
-    reducers: {
-        addToCart: (state, action) => {
-            const item = action.payload;
-            const existing = state.items.find(i => i.id === item.id);
-            // console.log("Redux addToCart payload:", action.payload);
-            if (existing) {
-                existing.quantity += 1;
-            } else {
-                state.items.push({ ...item, quantity: 1 })
-            };
+      if (existing) {
+        existing.quantity += 1;
+      } else {
+        state.items.push({ ...action.payload, quantity: action.payload.quantity || 1 });
+      }
+      localStorage.setItem("cart", JSON.stringify(state.items));
+    },
 
-            localStorage.setItem("cart", JSON.stringify(state.items));
-        },
+    updateQuantity: (state, action) => {
+      const { productId, quantity } = action.payload;
+      const existingItem = state.items.find((item) => item.id === productId);
 
-        updateQuantity: (state, action) => {
-            const { productId, quantity } = action.payload;
-            const existingItem = state.items.find(item => item.id === productId);
-            if (existingItem) {
-                if (quantity <=0) {
-                    state.items = state.items.filter(i => i.id !== productId)
-                } else {
-                    existingItem.quantity = quantity;
-                }
-            }
-
-            localStorage.setItem('cart', JSON.stringify(state.items))
-        },
-
-        removeFromCart: (state, action) => {
-            const itemIndex= state.items.findIndex(i => i.id === action.payload);
-
-            if (itemIndex !== -1) {
-                if (state.items[itemIndex].quantity > 1) {
-                    state.items[itemIndex].quantity -= 1;
-                } else {
-                    state.items.splice(itemIndex, 1)
-                }
-            }
-
-            localStorage.setItem('cart', JSON.stringify(state.items))
-        },
-
-        decreaseQuantity: (state, action) => {
-            const item = state.items.find(i => i.id === action.payload);
-
-            if (item) {
-                if (item.quantity > 1) {
-                    item.quantity -=1;
-                } else {
-                    state.items= state.items.filter(i => i.id !==action.payload)
-                }
-            } 
-
-            localStorage.setItem("cart", JSON.stringify(state.items));
-        },
-
-        clearCart: (state, action) => {
-            state.items = [];
-
-            localStorage.removeItem("cart");
+      if (existingItem) {
+        if (quantity <= 0) {
+          state.items = state.items.filter((i) => i.id !== productId);
+        } else {
+          existingItem.quantity = quantity;
         }
-    }
-})
+      }
 
-export const { addToCart, removeFromCart, decreaseQuantity, clearCart, updateQuantity } = cartSlice.actions
+      if (typeof window !== "undefined") {
+        localStorage.setItem("cart", JSON.stringify(state.items));
+      }
+    },
+
+    decreaseQuantity: (state, action) => {
+      const item = state.items.find((i) => i.id === action.payload);
+
+      if (item) {
+        if (item.quantity > 1) {
+          item.quantity -= 1;
+        } else {
+          state.items = state.items.filter((i) => i.id !== action.payload);
+        }
+      }
+
+      if (typeof window !== "undefined") {
+        localStorage.setItem("cart", JSON.stringify(state.items));
+      }
+    },
+
+    clearCart: (state) => {
+      state.items = [];
+      if (typeof window !== "undefined") {
+        localStorage.removeItem("cart");
+      }
+    },
+  },
+});
+
+export const { addToCart, decreaseQuantity, clearCart, updateQuantity } =
+  cartSlice.actions;
 export default cartSlice.reducer;
