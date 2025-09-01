@@ -68,7 +68,7 @@ const Navbar = () => {
   return (
     <>
       {/* Top bar */}
-      <div className="mb-[156px] lg:mb-[140px]">
+      <div className="mb-[156px] lg:mb-[120px]">
         <div className="fixed top-0 left-0 right-0 z-40">
           <div className="w-full bg-orange-600 text-white flex items-center px-4 py-3 relative text-sm">
 

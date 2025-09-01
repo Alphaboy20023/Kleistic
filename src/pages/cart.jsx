@@ -9,7 +9,7 @@ const Cart = () => {
 
     const dispatch = useDispatch();
     const cartItems = useSelector(state => state.cart.items);
-    const { products, error, success } = useSelector((state) => state.products);
+    
 
 
     const handleClearCart = () => {
@@ -35,7 +35,7 @@ const Cart = () => {
     return (
         <>
             <Navbar />
-            <div className="pt-[105px] lg:pt-[110px] ">
+            <div>
                 <main className="flex justify-center h-full max-w-6xl mx-auto py-11 flex-col gap-3">
                     <table className="w-full max-w-6xl mx-auto border-separate border-spacing-y-5">
                         <thead>

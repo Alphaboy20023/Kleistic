@@ -99,7 +99,7 @@ const Register = () => {
   return (
     <>
       <Navbar />
-      <div className="pt-[75px] lg:pt-[98px] min-h-screen relative">
+      <div className="min-h-screen relative">
         <main className="my-9 flex flex-row gap-2">
           <div className="w-full hidden lg:block">
             <img src="/img/Screenshot (24).png" alt="" className="w-[55vw] object-cover h-full" />

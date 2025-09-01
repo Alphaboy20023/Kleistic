@@ -63,7 +63,7 @@ const Checkout = () => {
     return (
         <>
             <Navbar />
-            <div className="lg:pt-[140px] pt-[160px] md:pt-[200px] sm:pt-[150px] p-4 gap-2 lg:p-9 flex lg:flex-nowrap flex-wrap md:flex-nowrap sm:flex-nowrap lg:pl-[80px] lg:gap-7">
+            <div className="p-3 gap-2 flex lg:flex-nowrap flex-wrap md:flex-nowrap sm:flex-nowrap lg:pl-[80px] lg:gap-7">
 
                 {/* Billing Form */}
                 <div className="space-y-5 w-full max-w-7xl">

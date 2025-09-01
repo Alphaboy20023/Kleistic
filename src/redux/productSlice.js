@@ -2,7 +2,7 @@ import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import axios from "axios";
 
 // const API_URL = "http://localhost:8000/auth/products/";
-const API_URL = "https://kleistic-v2.onrender.com/auth/";
+const API_URL = "https://kleistic-v2.onrender.com/auth/products/";
 
 export const getProducts = createAsyncThunk(
     "product/getProducts",

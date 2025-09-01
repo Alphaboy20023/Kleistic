@@ -4,7 +4,7 @@ import axios from "axios";
 
 
 // const API_URL = "http://localhost:8000/auth/orders/";
-const API_URL = "https://kleistic-v2.onrender.com/auth/" 
+const API_URL = "https://kleistic-v2.onrender.com/auth/orders/" 
 
 export const createOrder = createAsyncThunk(
     "orders/createOrder",

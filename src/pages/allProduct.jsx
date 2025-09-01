@@ -32,10 +32,10 @@ const AllProducts = () => {
     return (
         <>
             <Navbar />
-            <div className="max-w-[1200px] mx-auto px-4 py-8 lg:pt-[75px] sm:pt-[60px] pt-[100px]">
+            <div className="max-w-[1200px] mx-auto">
                 {/* <div> home </div> */}
                 {filteredProducts.length ? (
-                    <div className="pt-[50px] p-1 w-[100%]">
+                    <div className=" p-1 w-[100%]">
                         <WithSpinner>
                         <div className="flex py-3 gap-4 items-center">
                             <div className="h-[40px] w-[20px] rounded bg-orange-700" />

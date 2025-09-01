@@ -1,25 +1,31 @@
 import { useParams } from "react-router-dom";
-import defaultProducts from "../data/product";
 import Navbar from "../components/Navbar";
 import Footer from "../components/Footer";
 import { Link } from "react-router-dom";
 import { LuEye } from 'react-icons/lu';
+import { useSelector } from "react-redux";
 
 
 const CategoryPage = () => {
     const { mainCategory } = useParams();
+    const decodedCategory = decodeURIComponent(mainCategory);
+    const { products } = useSelector((state) => state.products);
 
-    const products = defaultProducts.filter(
-        (product) =>
-            product.mainCategory &&
-            product.mainCategory.toLowerCase() === mainCategory.toLowerCase()
+    const productCategories = products.filter(
+        (product) => product.mainCategory === decodedCategory
     );
+
+    console.log("URL category:", decodedCategory);
+    // console.log("Products:", products);
+    console.log("Product categories:", products.map(p => p.mainCategory));
+
+
 
     return (
         <>
             <Navbar />
 
-            <div className="p-6 pt-[150px] lg:pt-[130px] gap-3 lg:flex-row flex-col flex lg:flex-nowrap flex-wrap lg:gap-6">
+            <div className="p-7 gap-3 lg:flex-row flex-col flex lg:flex-nowrap flex-wrap lg:gap-6">
                 <aside className=" flex  flex-col border-r-0 sm:border-r-2 px-3 lg:w-[15vw]">
                     {[
                         "Women's Fashion", "Men's Fashion", "Electronics", "Gaming",
@@ -32,11 +38,11 @@ const CategoryPage = () => {
                 </aside>
                 <div>
                     <h2 className="text-2xl font-bold mb-4">{mainCategory}</h2>
-                    {products.length === 0 ? (
+                    {productCategories.length === 0 ? (
                         <p className="text-gray-500">No products found in this category.</p>
                     ) : (
                         <div className="flex flex-wrap ">
-                            {products.map((product) => (
+                            {productCategories.map((product) => (
                                 <div
                                     key={product.id}
                                     className="w-[40vw] sm:w-[28vw] md:w-[33.333vw] lg:w-[23vw] snap-start px-3 mt-2">
