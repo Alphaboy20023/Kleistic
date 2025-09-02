@@ -13,7 +13,7 @@ import { getProducts } from "../redux/productSlice";
 const FlashSalesCarousel = forwardRef(({ nextEl, prevEl }, ref) => {
     const swiperRef = useRef();
     const dispatch = useDispatch();
-    const { products, error, success } = useSelector((state) => state.products);
+    const { products } = useSelector((state) => state.products);
 
 
     const handleAddToCart = (product) => {

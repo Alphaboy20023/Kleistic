@@ -15,7 +15,7 @@ import { getProducts } from "../redux/productSlice";
 const AllProducts = () => {
     const { categoryId } = useParams();
     const dispatch = useDispatch();
-    const { products, error, success } = useSelector((state) => state.products);
+    const { products } = useSelector((state) => state.products);
     
 
     const handleAddToCart = (products) => {
