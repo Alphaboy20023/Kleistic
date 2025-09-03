@@ -20,11 +20,12 @@ export const logIn = createAsyncThunk('auth/login', async ({ username, password 
     const response = await api.post('login/', { username, password });
 
     const { access, refresh } = response.data.tokens;
+    const user = response.data.user;
     // console.log(access)
 
     localStorage.setItem('access', access);
     localStorage.setItem('refresh', refresh)
-    
+    localStorage.setItem('kleistic_user', JSON.stringify(user));
 
     api.defaults.headers.common['Authorization'] = `Bearer ${access}`;
 
@@ -102,7 +103,25 @@ export const refreshToken = createAsyncThunk(
 const authSlice = createSlice({
   name: 'auth',
   initialState: {
-    data: null,
+    data: (() => {
+      // Initialize from localStorage on app startup
+      const access = localStorage.getItem('access');
+      const refresh = localStorage.getItem('refresh');
+      const userString = localStorage.getItem('kleistic_user');
+
+      if (access && refresh && userString) {
+        try {
+          const user = JSON.parse(userString);
+          return {
+            tokens: { access, refresh },
+            user: user
+          };
+        } catch (error) {
+          localStorage.removeItem('kleistic_user');
+        }
+      }
+      return null;
+    })(),
     status: "idle",
     error: '',
   },
@@ -114,6 +133,7 @@ const authSlice = createSlice({
       state.error = '';
       localStorage.removeItem('access');
       localStorage.removeItem('refresh');
+      localStorage.removeItem('kleistic_user');
     },
     resetAuth: (state) => {
       state.status = "idle";

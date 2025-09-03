@@ -2,7 +2,7 @@ import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import axios from "axios";
 
 const API = axios.create({
-//   baseURL: "http://localhost:8000/auth/",
+  //   baseURL: "http://localhost:8000/auth/",
   baseURL: "https://kleistic-v2.onrender.com/auth/",
   headers: {
     "Content-Type": "application/json",
@@ -28,6 +28,8 @@ export const createOrder = createAsyncThunk(
       const res = await API.post("orders/", orderData);
       return res.data;
     } catch (err) {
+      console.log('Full error object:', err); // See the full error
+      console.log('Error response:', err.response?.data);
       return rejectWithValue(err.response?.data || "Failed to create order");
     }
   }
@@ -48,17 +50,10 @@ export const fetchOrders = createAsyncThunk(
   }
 );
 
-export const deleteOrder = createAsyncThunk(
-  "orders/deleteOrder",
-  async (orderId, { rejectWithValue }) => {
-    try {
-      await API.delete(`orders/${orderId}/`);
-      return orderId; // return id so we can filter locally
-    } catch (err) {
-      return rejectWithValue(err.response?.data || "Failed to delete order");
-    }
-  }
-);
+export const deleteOrder = createAsyncThunk('orders/deleteOrder', async (orderId) => {
+    const response = await axios.delete(`/orders/${orderId}/`);
+    return response.data; // Returns the updated order with status: "Cancelled"
+});
 
 export const refreshAccessToken = createAsyncThunk(
   "auth/refresh",
@@ -104,7 +99,21 @@ const orderSlice = createSlice({
       })
       .addCase(createOrder.rejected, (state, action) => {
         state.loading = false;
-        state.error = action.payload?.error || action.error?.message || "Something went wrong";
+
+        const errorPayload = action.payload;
+
+        if (typeof errorPayload === 'string') {
+          state.error = errorPayload;
+        } else if (errorPayload?.detail) {
+          state.error = errorPayload.detail;
+        } else if (errorPayload?.error) {
+          state.error = errorPayload.error;
+        } else if (errorPayload?.message) {
+          state.error = errorPayload.message;
+        } else {
+
+          state.error = "Please check your form fields";
+        }
       })
 
       // fetchOrders
@@ -122,10 +131,36 @@ const orderSlice = createSlice({
 
       // deleteOrder
       .addCase(deleteOrder.fulfilled, (state, action) => {
-        state.orders = state.orders.filter((o) => o.id !== action.payload);
+        // Update the order in the state with the new status
+        const updatedOrder = action.payload;
+        const index = state.orders.findIndex(order => order.id === updatedOrder.id);
+        if (index !== -1) {
+          state.orders[index] = updatedOrder;
+        }
+      })
+
+      .addCase(deleteOrder.rejected, (state, action) => {
+        state.error = action.error.message;
       });
   },
 });
 
 export const { resetOrderState } = orderSlice.actions;
 export default orderSlice.reducer;
+
+
+
+// {
+//   "shipping_address": "12 Test Avenue, Lagos",
+//   "paymentMethod": "PAY_ON_DELIVERY",
+//   "items": [
+//     {
+//       "product": 1,
+//       "quantity": 2
+//     },
+//     {
+//       "product": 3,
+//       "quantity": 1
+//     }
+//   ]
+// }

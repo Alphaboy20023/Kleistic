@@ -9,8 +9,10 @@ import { fetchOrders, deleteOrder } from "../redux/orderSlice";
 
 const Orders = () => {
     const [activeTab, setActiveTab] = useState("pending");
-    const { orders } = useSelector((state) => state.orders);
     const dispatch = useDispatch();
+    const { orders } = useSelector((state) => state.orders);
+    const auth = useSelector(state => state.auth.data);
+    const user = auth?.user
 
     useEffect(() => {
         dispatch(fetchOrders());
@@ -18,9 +20,30 @@ const Orders = () => {
 
     const handleDelete = (orderId) => {
         if (window.confirm("Are you sure you want to cancel this order?")) {
-            dispatch(deleteOrder(orderId));
+            dispatch(deleteOrder(orderId)).then(() => {
+                // Refresh orders after cancellation to reflect updated status
+                dispatch(fetchOrders());
+            });
         }
     };
+
+    const userOrders = orders.filter((order) => 
+        order.customer === user?.username
+        // (activeTab === "pending" 
+        //     ? ["pending", "delivered"].includes(order.status.toLowerCase())
+        //     : ["cancelled", "returned"].includes(order.status.toLowerCase())
+        // )
+    );
+
+    // const userOrders = orders.filter((order) =>
+    //     order.customer === user?.username &&
+    //     (activeTab === "pending"
+    //         ? ["Pending", "Paid", "Processing", "Fulfilled", "Delivered"].includes(order.status)
+    //         : ["Cancelled", "Refunded"].includes(order.status)
+    //     )
+    // );
+
+    // const tabOps = 
 
 
     return (
@@ -50,11 +73,11 @@ const Orders = () => {
                     <h2 className="text-xl font-bold mb-4 capitalize">
                         {activeTab} Orders
                     </h2>
-                    {orders.length === 0 ? (
-                        <p>No {activeTab} orders yet.</p>
+                    {userOrders.length === 0 ? (
+                        <p>No {activeTab} Orders Yet.</p>
                     ) : (
                         <ul className="space-y-3">
-                            {orders.map((order) => (
+                            {userOrders.map((order) => (
                                 <li
                                     key={order.id}
                                     className="p-4 border rounded shadow-sm space-y-4"

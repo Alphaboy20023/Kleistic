@@ -49,14 +49,10 @@ const Navbar = () => {
 
   const dispatch = useDispatch();
 
-
-
   const handleLogout = () => {
     dispatch(logout());
     navigate('/login')
   };
-
-
 
   const cartItems = useSelector(state => state.cart.items);
   const itemCount = cartItems.reduce((acc, item) => acc + item.quantity, 0);

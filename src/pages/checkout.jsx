@@ -42,7 +42,7 @@ const Checkout = () => {
                     quantity: item.quantity
                 }))
         };
-
+        // console.log('Order data being sent:', orderData);
         dispatch(createOrder(orderData));
     };
 

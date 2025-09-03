@@ -67,7 +67,7 @@ const Login = () => {
 
         if (error && clickedLogin) {
             setShowAlert(true);
-            const timer = setTimeout(() => setShowAlert(false), 5000);
+            const timer = setTimeout(() => setShowAlert(false), 4000);
             return () => clearTimeout(timer);
         }
     }, [status, error, data?.user, navigate, clickedLogin]);
@@ -89,21 +89,20 @@ const Login = () => {
 
 
                     <div className=" gap-6 flex flex-col w-full justify-center py-[30px] px-[45px] ">
-                        <div>
-                            <h1 className="text-4xl font-semibold my-3">Login to Kleistic</h1>
-                            <p>Enter Your details below</p>
-                        </div>
-
                         {showAlert && status === "succeeded" && data?.user && (
                             <div className="p-1">
-                                <div className="fixed font-bold top-40 right-7 z-50 w-fit bg-green-100 border border-2 border-red-700 text-green-700 font-semibold px-3 py-2 rounded shadow-lg text-sm sm:text-base transition-all duration-300 ease-in-out">
-                                    <span className="text-bold">Login successful!. Redirecting to home page</span>
-                                    <span className="dot-animated inline-block">
-                                        <span>.</span><span>.</span><span>.</span>
+                                <div className="fixed font-bold top-40 right-7 z-50 w-fit bg-green-700 border border-1 text-white font-semibold px-3 py-2 rounded shadow-lg  sm:text-base transition-all duration-300 ease-in-out">
+                                    <span className="text-bold text-[18px]">Login successful!. Redirecting to home page</span>
+                                    <span className="dot-animated inline-block text-xl">
+                                        <span>.</span><span>.</span><span>.</span><span>.</span>
                                     </span>
                                 </div>
                             </div>
                         )}
+                        <div>
+                            <h1 className="text-4xl font-semibold my-3">Login to Kleistic</h1>
+                            <p>Enter Your details below</p>
+                        </div>
 
                         {showAlert && error && typeof error === "object" ? (
                             <div className="fixed font-bold top-40 right-7 z-50 w-fit bg-red-100 border border-2 border-red-700 text-red-700 px-3 py-2 rounded shadow-lg text-sm sm:text-base transition-all duration-300 ease-in-out">
