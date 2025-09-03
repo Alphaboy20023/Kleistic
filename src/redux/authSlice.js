@@ -4,7 +4,8 @@ import { auth, googleProvider } from "../firebase";
 import { signInWithPopup } from "firebase/auth";
 
 const api = axios.create({
-  // localhost: http://127.0.0.1:8000/auth/ for dev
+
+  // baseURL: "http://127.0.0.1:8000/auth/",
   baseURL: "https://kleistic-v2.onrender.com/auth/",
   headers: {
     "Content-Type": "application/json",
@@ -19,9 +20,13 @@ export const logIn = createAsyncThunk('auth/login', async ({ username, password 
     const response = await api.post('login/', { username, password });
 
     const { access, refresh } = response.data.tokens;
+    // console.log(access)
 
     localStorage.setItem('access', access);
     localStorage.setItem('refresh', refresh)
+    
+
+    api.defaults.headers.common['Authorization'] = `Bearer ${access}`;
 
     return response.data;
   } catch (error) {
@@ -42,8 +47,8 @@ export const googleLogin = createAsyncThunk('auth/googleLogin', async (_, thunkA
     const { user, tokens } = response.data;
 
     localStorage.setItem("kleistic_user", JSON.stringify(user));
-    localStorage.setItem("access_token", tokens.access);
-    localStorage.setItem("refresh_token", tokens.refresh);
+    localStorage.setItem("access", tokens.access);
+    localStorage.setItem("refresh", tokens.refresh);
 
     axios.defaults.headers.common["Authorization"] = `Bearer ${tokens.access}`;
 
@@ -62,7 +67,7 @@ export const register = createAsyncThunk('auth/register', async (userData, thunk
   } catch (error) {
 
     console.error('❌ Register error:', error.response?.data || error.message);
-    
+
     if (error.response?.data) {
       return thunkAPI.rejectWithValue(error.response.data);
     }
@@ -70,6 +75,28 @@ export const register = createAsyncThunk('auth/register', async (userData, thunk
     return thunkAPI.rejectWithValue({ error: 'Registration failed' });
   }
 })
+
+export const refreshToken = createAsyncThunk(
+  "auth/refresh",
+  async (_, thunkAPI) => {
+    try {
+      const refresh = localStorage.getItem("refresh");
+      if (!refresh) throw new Error("No refresh token found");
+
+      const response = await api.post("token/refresh/", { refresh });
+      const { access } = response.data;
+
+      localStorage.setItem("access", access);
+      axios.defaults.headers.common["Authorization"] = `Bearer ${access}`;
+
+      return { access };
+    } catch (error) {
+      thunkAPI.dispatch(logout()); // clear state if refresh fails
+      return thunkAPI.rejectWithValue("Session expired, please login again");
+    }
+  }
+);
+
 
 
 const authSlice = createSlice({
@@ -147,6 +174,23 @@ const authSlice = createSlice({
       .addCase(googleLogin.rejected, (state, action) => {
         state.status = 'failed';
         state.error = action.payload || action.error.message
+      })
+
+      .addCase(refreshToken.pending, (state) => {
+        state.status = "refreshing";
+      })
+      .addCase(refreshToken.fulfilled, (state, action) => {
+        state.status = "succeeded";
+        if (state.data) {
+          state.data.tokens = {
+            ...state.data.tokens,
+            access: action.payload.access
+          };
+        }
+      })
+      .addCase(refreshToken.rejected, (state, action) => {
+        state.status = "failed";
+        state.error = action.payload || "Token refresh failed";
       });
 
   }

@@ -20,7 +20,7 @@ const Checkout = () => {
     });
 
     const item_total = cartItems.filter(item => item.quantity > 0).reduce((total, item) => total + item.price * item.quantity, 0)
-    const shipping = 25;
+    const shipping = item_total > 15000 ? 400 : 150;
     const total = item_total + shipping;
 
     const handleInputChange = (e) => {
@@ -47,17 +47,17 @@ const Checkout = () => {
     };
 
     const billingFields = [
-        { label: "First Name", name: "firstName"},
-        { label: "Company Name", name: "companyName"},
+        { label: "First Name", name: "firstName" },
+        { label: "Company Name", name: "companyName" },
         { label: "Shipping Address", name: "shippingAddress", required: true },
-        { label: "Town/City", name: "townCity"},
-        { label: "Phone Number", name: "phoneNumber"},
-        { label: "Email Address", name: "emailAddress"},
+        { label: "Town/City", name: "townCity" },
+        { label: "Phone Number", name: "phoneNumber" },
+        { label: "Email Address", name: "emailAddress" },
     ];
 
     const paymentMethods = [
-        { id: "bank", value: "BANK", label: "Bank", hasImage: true },
-        { id: "cod", value: "CASH ON DELIVERY", label: "Cash on Delivery", hasImage: false }
+        { id: "bank", value: "Bank", label: "Bank", hasImage: true },
+        { id: "cod", value: "Cash On Delivery", label: "Cash on Delivery", hasImage: false }
     ];
 
     return (
@@ -93,6 +93,8 @@ const Checkout = () => {
                 </div>
 
                 <section className="pt-[80px] w-full lg:px-9 px-4 space-y-5">
+                    {error && <p style={{ color: "red" }} className="font-bold">{error}</p>}
+                    {success && <p style={{ color: "green" }} className="font-bold">Order placed successfully!</p>}
                     <h2 className="text-xl font-bold">Order Summary</h2>
                     {cartItems
                         .filter(item => item.quantity > 0)
@@ -138,10 +140,10 @@ const Checkout = () => {
                     <div className="flex flex-col space-y-4 pt-4">
                         {paymentMethods.map((method) => (
                             <div key={method.id} className="flex items-center space-x-4">
-                                <input 
-                                    type="radio" 
-                                    id={method.id} 
-                                    name="paymentMethod" 
+                                <input
+                                    type="radio"
+                                    id={method.id}
+                                    name="paymentMethod"
                                     value={method.value}
                                     onChange={handleInputChange}
                                     checked={formData.paymentMethod === method.value}
@@ -174,8 +176,6 @@ const Checkout = () => {
                         <button className="p-2 w-1/3 text-center text-white text-2xl bg-green-600 border rounded" onClick={handleOrder} disabled={loading} >
                             {loading ? "Placing Order..." : "Place Order"}
                         </button>
-                        {error && <p style={{ color: "red" }} className="font-bold">{error}</p>}
-                        {success && <p style={{ color: "green" }} className="font-bold">Order placed successfully!</p>}
                     </div>
                 </section>
             </div>

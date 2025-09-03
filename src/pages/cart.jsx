@@ -27,10 +27,10 @@ const Cart = () => {
     const cartInfo = cartItems.filter(item => item.quantity > 0);
 
     // console.log(cartInfo);
-    const subtotal = cartItems.reduce((acc, item) => acc + item.price * item.quantity, 0.00)
-    const shipping = subtotal > 200 ? 25 : 0;
+    const item_total = cartItems.reduce((acc, item) => acc + item.price * item.quantity, 0.00)
+    const shipping = item_total > 15000 ? 400 : 150;
 
-    const total = subtotal + shipping
+    const total = item_total + shipping
 
     return (
         <>
@@ -108,7 +108,7 @@ const Cart = () => {
                             <h2 className="font-bold text-2xl">Cart Total</h2>
                             <div className="font-semibold flex justify-between border-b border-gray-300 p-2">
                                 <p>Subtotal:</p>
-                                <p>₦{subtotal.toLocaleString("en-NG", { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</p>
+                                <p>₦{item_total.toLocaleString("en-NG", { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</p>
                             </div>
                             <div className="font-semibold flex justify-between border-b border-gray-300 p-2">
                                 <p>Shipping:</p>

@@ -13,14 +13,17 @@ const cartSlice = createSlice({
   reducers: {
     addToCart: (state, action) => {
       const item = action.payload;
-      const existing = state.items.find((i) => i.id === item.id === action.payload.id);
+      const existing = state.items.find((i) => i.id === item.id);
 
       if (existing) {
         existing.quantity += 1;
       } else {
-        state.items.push({ ...action.payload, quantity: action.payload.quantity || 1 });
+        state.items.push({ ...item, quantity: item.quantity || 1 });
       }
-      localStorage.setItem("cart", JSON.stringify(state.items));
+
+      if (typeof window !== "undefined") {
+        localStorage.setItem("cart", JSON.stringify(state.items));
+      }
     },
 
     updateQuantity: (state, action) => {

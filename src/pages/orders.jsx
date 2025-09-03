@@ -1,37 +1,26 @@
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import Navbar from "../components/Navbar";
 import Footer from "../components/Footer";
-import axios from "axios";
+import { useEffect } from "react";
 import { useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
+import { fetchOrders, deleteOrder } from "../redux/orderSlice";
+
 
 const Orders = () => {
-    const [activeTab, setActiveTab] = useState("pending"); // default tab
-    const [orders, setOrders] = useState([]);
-    const accessToken = useSelector((state) => state.auth.data?.tokens?.access);
+    const [activeTab, setActiveTab] = useState("pending");
+    const { orders } = useSelector((state) => state.orders);
+    const dispatch = useDispatch();
 
-    // your backend endpoint
-    const Order_URL = "http://127.0.0.1:8000/auth/orders/";
-
-    // fetch orders when activeTab changes
     useEffect(() => {
-        const fetchOrders = async (getState) => {
-            try {
-                const res = await axios.get(`${Order_URL}?status=${activeTab}`, {
-                    headers: {
-                        Authorization: `Bearer ${accessToken}`,
-                    },
-                });
-                setOrders(res.data);
-            } catch (err) {
-                console.error("Failed to fetch orders", err);
-            }
-        };
+        dispatch(fetchOrders());
+    }, [dispatch]);
 
-        if (accessToken) {
-            fetchOrders();
+    const handleDelete = (orderId) => {
+        if (window.confirm("Are you sure you want to cancel this order?")) {
+            dispatch(deleteOrder(orderId));
         }
-    }, [activeTab, accessToken]);
-    // console.log(accessToken)
+    };
 
 
     return (
@@ -70,20 +59,27 @@ const Orders = () => {
                                     key={order.id}
                                     className="p-4 border rounded shadow-sm space-y-4"
                                 >
+                                    <p className="text-xl font-semibold">order id: #{order.id}</p>
                                     {order.items.map((item, index) => (
                                         <div key={index} className="flex items-center gap-4">
+
                                             <img
-                                                src={item.product.image}
-                                                alt={item.product.title}
+                                                src={item.productDetails.image}
+                                                alt={item.productDetails.title}
                                                 className="w-20 h-20 rounded"
                                             />
                                             <div className="gap-2 flex flex-col">
                                                 <p>
-                                                    {item.product.title}
+                                                    {item.productDetails.title}
                                                 </p>
-                                                <p className="border rounded p-1 shadow w-1/2">
-                                                    {order.status}
-                                                </p>
+                                                <div className="flex space-x-3">
+                                                    <p className="border rounded p-1 shadow text-center">
+                                                        {order.status}
+                                                    </p>
+                                                    <button className="border rounded p-1 shadow  bg-red-700 text-white text-center" onClick={() => handleDelete(order.id)}>
+                                                        CANCEL
+                                                    </button>
+                                                </div>
                                             </div>
                                             <p className="ml-auto">see details</p>
                                         </div>
